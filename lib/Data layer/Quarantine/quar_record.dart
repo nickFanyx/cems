@@ -1,3 +1,1 @@
-class QuarantineModel{
-  
-}
+class QuarantineModel {}
