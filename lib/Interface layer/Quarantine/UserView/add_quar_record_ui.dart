@@ -1,3 +1,4 @@
+import 'package:cems/BLoC%20layer/Quarantine/UserBloc/add_quar_record_bloc.dart';
 import 'package:flutter/material.dart';
 
 class UAddQuarRec extends StatefulWidget {
@@ -14,6 +15,8 @@ enum Placee { Home, QuarantinePlace }
 enum CovRes { Positive, Negative }
 
 class _UAddQuarRecState extends State<UAddQuarRec> {
+  AddQuarRecordBloc addQuarRecordBloc = AddQuarRecordBloc();
+  final controller = TextEditingController();
   Typee? _typed;
   Placee? _plate;
   CovRes? _res;
@@ -245,6 +248,7 @@ class _UAddQuarRecState extends State<UAddQuarRec> {
                     minimumSize: const Size.fromHeight(40),
                   ),
                   onPressed: () {
+                    addQuarRecordBloc.addRecord("nik");
                     Navigator.pop(context);
                   },
                   child: const Text(
