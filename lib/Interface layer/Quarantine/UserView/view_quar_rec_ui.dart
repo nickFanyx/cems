@@ -1,13 +1,18 @@
+import 'package:cems/BLoC%20layer/Quarantine/UserBloc/view_quar_rec_bloc.dart';
+import 'package:cems/Data%20layer/Quarantine/quar_record.dart';
 import 'package:flutter/material.dart';
 
 class UViewQuarRec extends StatefulWidget {
-  const UViewQuarRec({Key? key}) : super(key: key);
+  final QuarantineModel qrModel;
+  const UViewQuarRec({Key? key, required this.qrModel}) : super(key: key);
 
   @override
   State<UViewQuarRec> createState() => _UViewQuarRecState();
 }
 
 class _UViewQuarRecState extends State<UViewQuarRec> {
+  ViewQRRecord viewBloc = ViewQRRecord();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,12 +48,13 @@ class _UViewQuarRecState extends State<UViewQuarRec> {
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),
                                   ),
-                                  child: const Padding(
-                                    padding: EdgeInsets.all(4.0),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(4.0),
                                     child: SizedBox(
                                       child: Text(
-                                        'Day-5',
-                                        style: TextStyle(color: Colors.white),
+                                        'Day - ${viewBloc.daysBetween(widget.qrModel.dateTime, DateTime.now())}',
+                                        style: const TextStyle(
+                                            color: Colors.white),
                                       ),
                                     ),
                                   )),
@@ -63,7 +69,7 @@ class _UViewQuarRecState extends State<UViewQuarRec> {
                           ),
                           Column(
                             children: [
-                              SizedBox(
+                              const SizedBox(
                                 width: 250,
                                 child: Text(
                                   'Please wear your mask immediately. Please quarantine yourself and wait for MOH to contact you.',
@@ -73,13 +79,13 @@ class _UViewQuarRecState extends State<UViewQuarRec> {
                                   ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 20,
                               ),
                               Container(
                                 color: Colors.red,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
+                                child: const Padding(
+                                  padding: EdgeInsets.all(8.0),
                                   child: Text(
                                     'CONFIRMED CASE',
                                     style: TextStyle(color: Colors.white),
@@ -109,7 +115,7 @@ class _UViewQuarRecState extends State<UViewQuarRec> {
                           const SizedBox(
                             width: 10,
                           ),
-                          Text('Name : Ali Bin Abu'),
+                          Text('Name : ${widget.qrModel.username}'),
                         ],
                       ),
                     ),
@@ -133,7 +139,7 @@ class _UViewQuarRecState extends State<UViewQuarRec> {
                           const SizedBox(
                             width: 10,
                           ),
-                          Text('Status : Stage 2'),
+                          Text('Status : ${widget.qrModel.verifyResult}'),
                         ],
                       ),
                     ),
@@ -157,7 +163,8 @@ class _UViewQuarRecState extends State<UViewQuarRec> {
                           const SizedBox(
                             width: 10,
                           ),
-                          Text('Center : Taman Tg Anis, KB'),
+                          Text(
+                              '${widget.qrModel.quarantinePlace} : ${widget.qrModel.quarantineAddress}'),
                         ],
                       ),
                     ),
@@ -181,7 +188,7 @@ class _UViewQuarRecState extends State<UViewQuarRec> {
                           const SizedBox(
                             width: 10,
                           ),
-                          Text('Type : Close Contact A'),
+                          Text('Type : ${widget.qrModel.usertype}'),
                         ],
                       ),
                     ),
