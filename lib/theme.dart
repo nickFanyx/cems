@@ -5,7 +5,7 @@ ThemeData theme() {
     brightness: Brightness.light,
     scaffoldBackgroundColor: Colors.white,
     appBarTheme: appBarTheme(),
-    scrollbarTheme: ScrollbarThemeData(),
+    scrollbarTheme: const ScrollbarThemeData(),
     fontFamily: "Poppins",
     // dialogTheme: dialogTheme(),
     textTheme: textTheme(),
@@ -17,7 +17,7 @@ ThemeData theme() {
       style: OutlinedButton.styleFrom(
         primary: Colors.redAccent,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-        textStyle: TextStyle(
+        textStyle: const TextStyle(
           fontSize: 12,
         ),
         // side: BorderSide(color: kPrimaryColor),

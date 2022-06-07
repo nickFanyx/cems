@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:cems/BLoC%20layer/Quarantine/UserBloc/add_quar_record_bloc.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +18,8 @@ enum CovRes { Positive, Negative }
 
 class _UAddQuarRecState extends State<UAddQuarRec> {
   AddQuarRecordBloc addQuarRecordBloc = AddQuarRecordBloc();
-  final controller = TextEditingController();
+
+  String symptom = "", patientName = "", patientPhone = "", currAdd = "";
   Typee? _typed;
   Placee? _plate;
   CovRes? _res;
@@ -85,13 +88,14 @@ class _UAddQuarRecState extends State<UAddQuarRec> {
                           padding: const EdgeInsets.all(15.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              Text('1.1 Justify your Symptoms'),
-                              SizedBox(
+                            children: [
+                              const Text('1.1 Justify your Symptoms'),
+                              const SizedBox(
                                 height: 15,
                               ),
                               TextField(
-                                decoration: InputDecoration(
+                                onChanged: (value) => symptom = value,
+                                decoration: const InputDecoration(
                                   border: OutlineInputBorder(),
                                   hintText: 'Symptoms',
                                 ),
@@ -114,27 +118,29 @@ class _UAddQuarRecState extends State<UAddQuarRec> {
                               padding: const EdgeInsets.all(15.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                children: const [
-                                  Text(
+                                children: [
+                                  const Text(
                                       '1.1 If yes, Please fill in COVID-19 Patient Name'),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 15,
                                   ),
                                   TextField(
-                                    decoration: InputDecoration(
+                                    onChanged: (value) => patientName = value,
+                                    decoration: const InputDecoration(
                                       border: OutlineInputBorder(),
                                       hintText: 'Enter patient name',
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 10,
                                   ),
-                                  Text('1.2 COVID-19 Patient Phone No'),
-                                  SizedBox(
+                                  const Text('1.2 COVID-19 Patient Phone No'),
+                                  const SizedBox(
                                     height: 10,
                                   ),
                                   TextField(
-                                    decoration: InputDecoration(
+                                    onChanged: (value) => patientPhone = value,
+                                    decoration: const InputDecoration(
                                       border: OutlineInputBorder(),
                                       hintText: '(eg 60XXX-XXXXXXX)',
                                     ),
@@ -189,8 +195,9 @@ class _UAddQuarRecState extends State<UAddQuarRec> {
                         const SizedBox(
                           height: 10,
                         ),
-                        const TextField(
-                          decoration: InputDecoration(
+                        TextField(
+                          onChanged: (value) => currAdd = value,
+                          decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             hintText: 'Address',
                           ),
@@ -248,7 +255,18 @@ class _UAddQuarRecState extends State<UAddQuarRec> {
                     minimumSize: const Size.fromHeight(40),
                   ),
                   onPressed: () {
-                    addQuarRecordBloc.addRecord("nik");
+                    addQuarRecordBloc.addRecord(
+                      "0148393272",
+                      _typed == Typee.Symptoms ? "Symptoms" : "Close Contact",
+                      symptom,
+                      patientName,
+                      patientPhone,
+                      _plate == Placee.Home ? "Home" : "Quarantine Center",
+                      currAdd,
+                      _res == CovRes.Positive ? "Positive" : "Negative",
+                      "Nik Ahmad Farihin",
+                    );
+
                     Navigator.pop(context);
                   },
                   child: const Text(

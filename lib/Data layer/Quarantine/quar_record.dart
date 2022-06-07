@@ -5,11 +5,13 @@ class QuarantineModel {
   final String symptomsDetail;
   final String patientName;
   final String patientNo;
-  final int quarantinePlace;
+  final String quarantinePlace;
   final String quarantineAddress;
   final String testResult;
   final String verifyResult;
   final String username;
+  final String staffResponse;
+  final DateTime dateTime;
 
   QuarantineModel({
     this.recordid = '',
@@ -23,6 +25,8 @@ class QuarantineModel {
     required this.testResult,
     required this.verifyResult,
     required this.username,
+    required this.staffResponse,
+    required this.dateTime,
   });
 
   Map<String, dynamic> toJson() => {
@@ -37,5 +41,7 @@ class QuarantineModel {
         'testResult': testResult,
         'verifyResult': verifyResult,
         'username': username,
+        'staffResponse': staffResponse,
+        'dateTime': dateTime,
       };
 }

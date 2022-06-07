@@ -1,7 +1,9 @@
+import 'package:cems/BLoC%20layer/Quarantine/UserBloc/manage_quar_rec_bloc.dart';
 import 'package:cems/Interface%20layer/Quarantine/UserView/add_daily_stat_ui.dart';
 import 'package:cems/Interface%20layer/Quarantine/UserView/add_quar_record_ui.dart';
 import 'package:cems/Interface%20layer/Quarantine/UserView/view_quar_rec_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UManageQuarRec extends StatefulWidget {
   const UManageQuarRec({Key? key}) : super(key: key);
@@ -11,28 +13,8 @@ class UManageQuarRec extends StatefulWidget {
 }
 
 class _UManageQuarRecState extends State<UManageQuarRec> {
-  List listDisplay = [
-    {
-      'id': '1',
-      'userType': 'Symptom',
-      'timeStamp': 'March 10,2021 at 10:57 pm ',
-    },
-    {
-      'id': '2',
-      'userType': 'Close Contact',
-      'timeStamp': 'December 10,2022 at 11:57 am ',
-    },
-    {
-      'id': '3',
-      'userType': 'Close Contact',
-      'timeStamp': 'December 10,2022 at 11:57 am ',
-    },
-    {
-      'id': '4',
-      'userType': 'Symptom',
-      'timeStamp': 'December 10,2022 at 11:57 am ',
-    },
-  ];
+  ManageQRRecordBloc manageBloc = ManageQRRecordBloc();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,11 +33,27 @@ class _UManageQuarRecState extends State<UManageQuarRec> {
             child: Container(
               height: 320,
               color: Colors.white,
-              child: ListView.builder(
-                itemBuilder: ((context, index) {
-                  return listitem(index);
-                }),
-                itemCount: listDisplay.length,
+              child: StreamBuilder<QuerySnapshot>(
+                stream: manageBloc.getData(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.hasError) {
+                    return const Text('Something went wrong');
+                  }
+
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Text("Loading");
+                  }
+
+                  return ListView(
+                    children:
+                        snapshot.data!.docs.map((DocumentSnapshot document) {
+                      Map<String, dynamic> data =
+                          document.data()! as Map<String, dynamic>;
+                      return listitem(data);
+                    }).toList(),
+                  );
+                },
               ),
             ),
           ),
@@ -64,13 +62,13 @@ class _UManageQuarRecState extends State<UManageQuarRec> {
           ),
           Center(
             child: InkWell(
-              onTap: () => {
+              onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => const UAddQuarRec(),
                   ),
-                ),
+                );
               },
               child: Card(
                   elevation: 10,
@@ -150,7 +148,7 @@ class _UManageQuarRecState extends State<UManageQuarRec> {
     );
   }
 
-  listitem(index) {
+  Widget listitem(data) {
     return Card(
       color: Colors.redAccent,
       elevation: 10,
@@ -158,13 +156,15 @@ class _UManageQuarRecState extends State<UManageQuarRec> {
         borderRadius: BorderRadius.circular(10),
       ),
       child: InkWell(
-        onTap: () => {
+        onTap: () {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const UViewQuarRec(),
+              builder: (context) => UViewQuarRec(
+                qrModel: manageBloc.creatingModel(data),
+              ),
             ),
-          ),
+          );
         },
         child: SizedBox(
           width: 300,
@@ -189,7 +189,7 @@ class _UManageQuarRecState extends State<UManageQuarRec> {
                     height: 10,
                   ),
                   Text(
-                    listDisplay[index]['userType'],
+                    data['usertype'],
                     style: const TextStyle(
                       fontSize: 20,
                       color: Colors.white,
@@ -199,7 +199,7 @@ class _UManageQuarRecState extends State<UManageQuarRec> {
                     height: 20,
                   ),
                   Text(
-                    listDisplay[index]['timeStamp'],
+                    (data['dateTime'] as Timestamp).toDate().toString(),
                     style: const TextStyle(
                       fontSize: 15,
                       color: Colors.white,
