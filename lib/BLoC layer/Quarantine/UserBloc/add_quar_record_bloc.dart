@@ -18,19 +18,19 @@ class AddQuarRecordBloc {
     final docRec =
         FirebaseFirestore.instance.collection("QuarantineRecord").doc();
     final QuarantineModel quar = QuarantineModel(
-      recordid: docRec.id,
-      userId: "0148393272",
-      usertype: userType,
-      symptomsDetail: symDetail,
-      patientName: patientName,
-      patientNo: patientNo,
-      quarantinePlace: quarantinePlace,
-      quarantineAddress: quarAddress,
-      testResult: testRes,
-      verifyResult: "Not Verify",
-      username: userName,
-      staffResponse: "",
-      dateTime: DateTime.now(),
+      docRec.id,
+      "0148393272",
+      userType,
+      symDetail,
+      patientName,
+      patientNo,
+      quarantinePlace,
+      quarAddress,
+      testRes,
+      "Not Verify",
+      userName,
+      "",
+      DateTime.now(),
     );
     log('lol :${quar.symptomsDetail}${quar.usertype}${quar.quarantinePlace}${quar.quarantineAddress}${quar.testResult}');
     final json = quar.toJson();

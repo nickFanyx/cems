@@ -1,3 +1,4 @@
+import 'package:cems/BLoC%20layer/Quarantine/UserBloc/add_daily_stat_bloc.dart';
 import 'package:flutter/material.dart';
 
 class UAddDailyStat extends StatefulWidget {
@@ -10,6 +11,8 @@ class UAddDailyStat extends StatefulWidget {
 enum Call { yes, no }
 
 class _UAddDailyStatState extends State<UAddDailyStat> {
+  AddDailyBloc dailyBloc = AddDailyBloc();
+
   bool fever = false;
   bool shivering = false;
   bool soreThroat = false;
@@ -190,6 +193,18 @@ class _UAddDailyStatState extends State<UAddDailyStat> {
                     minimumSize: const Size.fromHeight(40),
                   ),
                   onPressed: () {
+                    dailyBloc.addDaily(
+                        "0148393272",
+                        [
+                          fever,
+                          shivering,
+                          soreThroat,
+                          runnyNose,
+                          bodyAche,
+                          headache,
+                        ],
+                        _called == Call.yes ? true : false,
+                        "Nik Ahmad Farihin");
                     Navigator.pop(context);
                   },
                   child: const Text(
