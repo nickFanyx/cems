@@ -21,46 +21,6 @@ class _UManageQuarRecState extends State<UManageQuarRec> {
     return Scaffold(
       body: Column(
         children: [
-          const SizedBox(
-            height: 10,
-          ),
-          const Text(
-            'Quarantine Record List',
-            style: TextStyle(
-              fontSize: 15,
-            ),
-          ),
-          SingleChildScrollView(
-            child: Container(
-              height: 320,
-              color: Colors.white,
-              child: StreamBuilder<QuerySnapshot>(
-                stream: manageBloc.getData(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.hasError) {
-                    return const Text('Something went wrong');
-                  }
-
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Text("Loading");
-                  }
-
-                  return ListView(
-                    children:
-                        snapshot.data!.docs.map((DocumentSnapshot document) {
-                      Map<String, dynamic> data =
-                          document.data()! as Map<String, dynamic>;
-                      return listitem(data);
-                    }).toList(),
-                  );
-                },
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
           Center(
             child: InkWell(
               onTap: () {
@@ -142,6 +102,43 @@ class _UManageQuarRecState extends State<UManageQuarRec> {
                       ],
                     ),
                   )),
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          const Text(
+            'Quarantine Record List',
+            style: TextStyle(
+              fontSize: 15,
+            ),
+          ),
+          SingleChildScrollView(
+            child: Container(
+              height: 400,
+              color: Colors.white,
+              child: StreamBuilder<QuerySnapshot>(
+                stream: manageBloc.getData(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.hasError) {
+                    return const Text('Something went wrong');
+                  }
+
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Text("Loading");
+                  }
+
+                  return ListView(
+                    children:
+                        snapshot.data!.docs.map((DocumentSnapshot document) {
+                      Map<String, dynamic> data =
+                          document.data()! as Map<String, dynamic>;
+                      return listitem(data);
+                    }).toList(),
+                  );
+                },
+              ),
             ),
           ),
         ],

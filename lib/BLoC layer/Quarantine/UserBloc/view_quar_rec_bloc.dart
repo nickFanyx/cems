@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ViewQRRecord {
@@ -10,7 +9,7 @@ class ViewQRRecord {
 
   Color getColor(String status) {
     Color warning = Colors.red;
-    Color lowrisk = Colors.yellowAccent;
+    Color lowrisk = Colors.green;
     Color noresponse = Colors.grey;
 
     if (status == "Not Verify") {

@@ -7,7 +7,6 @@ class ManageQRRecordBloc {
 
     return FirebaseFirestore.instance
         .collection("QuarantineRecord")
-        .where("userId", isEqualTo: userId)
         .orderBy("dateTime", descending: true)
         .snapshots();
   }

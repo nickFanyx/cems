@@ -124,7 +124,7 @@ class _UViewQuarRecState extends State<UViewQuarRec> {
                           const SizedBox(
                             width: 10,
                           ),
-                          Text('Name    : ${widget.qrModel.username}'),
+                          Text('Name : ${widget.qrModel.username}'),
                         ],
                       ),
                     ),
@@ -204,6 +204,72 @@ class _UViewQuarRecState extends State<UViewQuarRec> {
                   ),
                 ),
               ),
+              widget.qrModel.usertype == "Symptoms"
+                  ? Card(
+                      color: Colors.white,
+                      elevation: 10,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: SizedBox(
+                          width: 340,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: [
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                    'Details : ${widget.qrModel.symptomsDetail}'),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  : Card(
+                      color: Colors.white,
+                      elevation: 10,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: SizedBox(
+                          width: 340,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                        'Name : ${widget.qrModel.patientName}'),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  children: [
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text('No : ${widget.qrModel.patientNo}'),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
             ],
           ),
         ),
