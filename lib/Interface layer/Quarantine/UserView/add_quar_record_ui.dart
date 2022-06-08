@@ -266,8 +266,24 @@ class _UAddQuarRecState extends State<UAddQuarRec> {
                       _res == CovRes.Positive ? "Positive" : "Negative",
                       "Nik Ahmad Farihin",
                     );
-
-                    Navigator.pop(context);
+                    showDialog<String>(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) => AlertDialog(
+                        title: const Text('Added!'),
+                        content:
+                            const Text('Quarantine Record Added Successfully!'),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context, 'OK');
+                              Navigator.pop(context);
+                            },
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      ),
+                    );
                   },
                   child: const Text(
                     'SUBMIT',

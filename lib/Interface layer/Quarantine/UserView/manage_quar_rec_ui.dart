@@ -4,6 +4,7 @@ import 'package:cems/Interface%20layer/Quarantine/UserView/add_quar_record_ui.da
 import 'package:cems/Interface%20layer/Quarantine/UserView/view_quar_rec_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 class UManageQuarRec extends StatefulWidget {
   const UManageQuarRec({Key? key}) : super(key: key);
@@ -184,10 +185,8 @@ class _UManageQuarRecState extends State<UManageQuarRec> {
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(
-                    height: 10,
-                  ),
                   Text(
                     data['usertype'],
                     style: const TextStyle(
@@ -199,7 +198,8 @@ class _UManageQuarRecState extends State<UManageQuarRec> {
                     height: 20,
                   ),
                   Text(
-                    (data['dateTime'] as Timestamp).toDate().toString(),
+                    DateFormat('MMMM d, yyyy – KK : mm a')
+                        .format(((data['dateTime'] as Timestamp).toDate())),
                     style: const TextStyle(
                       fontSize: 15,
                       color: Colors.white,

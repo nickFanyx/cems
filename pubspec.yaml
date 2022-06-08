@@ -37,6 +37,7 @@ dependencies:
   animated_splash_screen: ^1.2.0
   #firestore database
   cloud_firestore: ^3.1.17
+  intl: ^0.17.0-nullsafety.2
 
 dev_dependencies:
   flutter_test:
