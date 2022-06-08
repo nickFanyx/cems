@@ -158,10 +158,9 @@ class _UAddDailyStatState extends State<UAddDailyStat> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                            '3. Covid-19 Self Test/ RTK-Antigen / PCR Test Result'),
+                        const Text('2. Emergency Call'),
                         RadioListTile<Call>(
-                          title: const Text('Positive'),
+                          title: const Text('Yes'),
                           value: Call.yes,
                           groupValue: _called,
                           onChanged: (Call? value) {
@@ -171,7 +170,7 @@ class _UAddDailyStatState extends State<UAddDailyStat> {
                           },
                         ),
                         RadioListTile<Call>(
-                          title: const Text('Negative'),
+                          title: const Text('No'),
                           value: Call.no,
                           groupValue: _called,
                           onChanged: (Call? value) {
@@ -205,7 +204,25 @@ class _UAddDailyStatState extends State<UAddDailyStat> {
                         ],
                         _called == Call.yes ? true : false,
                         "Nik Ahmad Farihin");
-                    Navigator.pop(context);
+                    showDialog<String>(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) => AlertDialog(
+                        title: const Text('Submitted!'),
+                        content: Text(_called == Call.yes
+                            ? 'Our MOH Staff will contact you within 3 minutes.\n\nPlease Dial 999 if there is no call.'
+                            : 'Daily status submitted successfully.'),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context, 'OK');
+                              Navigator.pop(context);
+                            },
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      ),
+                    );
                   },
                   child: const Text(
                     'SUBMIT',

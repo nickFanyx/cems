@@ -44,7 +44,8 @@ class _UViewQuarRecState extends State<UViewQuarRec> {
                           Column(
                             children: [
                               Card(
-                                  color: Colors.redAccent,
+                                  color: viewBloc
+                                      .getColor(widget.qrModel.verifyResult),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),
                                   ),
@@ -58,9 +59,11 @@ class _UViewQuarRecState extends State<UViewQuarRec> {
                                       ),
                                     ),
                                   )),
-                              const Icon(
+                              Icon(
                                 Icons.hourglass_bottom_outlined,
                                 size: 70,
+                                color: viewBloc
+                                    .getColor(widget.qrModel.verifyResult),
                               ),
                             ],
                           ),
@@ -69,13 +72,18 @@ class _UViewQuarRecState extends State<UViewQuarRec> {
                           ),
                           Column(
                             children: [
-                              const SizedBox(
+                              SizedBox(
                                 width: 250,
-                                child: Text(
-                                  'Please wear your mask immediately. Please quarantine yourself and wait for MOH to contact you.',
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.red,
+                                child: Center(
+                                  child: Text(
+                                    widget.qrModel.staffResponse.isEmpty
+                                        ? "No response yet"
+                                        : widget.qrModel.staffResponse,
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      color: viewBloc.getColor(
+                                          widget.qrModel.verifyResult),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -83,12 +91,13 @@ class _UViewQuarRecState extends State<UViewQuarRec> {
                                 height: 20,
                               ),
                               Container(
-                                color: Colors.red,
-                                child: const Padding(
-                                  padding: EdgeInsets.all(8.0),
+                                color: viewBloc
+                                    .getColor(widget.qrModel.verifyResult),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
                                   child: Text(
-                                    'CONFIRMED CASE',
-                                    style: TextStyle(color: Colors.white),
+                                    widget.qrModel.verifyResult.toUpperCase(),
+                                    style: const TextStyle(color: Colors.white),
                                   ),
                                 ),
                               ),
@@ -115,7 +124,7 @@ class _UViewQuarRecState extends State<UViewQuarRec> {
                           const SizedBox(
                             width: 10,
                           ),
-                          Text('Name : ${widget.qrModel.username}'),
+                          Text('Name    : ${widget.qrModel.username}'),
                         ],
                       ),
                     ),
@@ -139,7 +148,7 @@ class _UViewQuarRecState extends State<UViewQuarRec> {
                           const SizedBox(
                             width: 10,
                           ),
-                          Text('Status : ${widget.qrModel.verifyResult}'),
+                          Text('Test Result : ${widget.qrModel.testResult}'),
                         ],
                       ),
                     ),
