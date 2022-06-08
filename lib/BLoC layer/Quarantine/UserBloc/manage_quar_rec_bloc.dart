@@ -13,19 +13,19 @@ class ManageQRRecordBloc {
 
   QuarantineModel creatingModel(var data) {
     QuarantineModel model = QuarantineModel(
-      recordid: data['recordid'],
-      userId: data['userId'],
-      usertype: data['usertype'],
-      symptomsDetail: data['symptomsDetail'],
-      patientName: data['patientName'],
-      patientNo: data['patientNo'],
-      quarantinePlace: data['quarantinePlace'],
-      quarantineAddress: data['quarantineAddress'],
-      testResult: data['testResult'],
-      verifyResult: data['verifyResult'],
-      username: data['username'],
-      staffResponse: data['staffResponse'],
-      dateTime: (data['dateTime'] as Timestamp).toDate(),
+      data['recordid'],
+      data['userId'],
+      data['usertype'],
+      data['symptomsDetail'],
+      data['patientName'],
+      data['patientNo'],
+      data['quarantinePlace'],
+      data['quarantineAddress'],
+      data['testResult'],
+      data['verifyResult'],
+      data['username'],
+      data['staffResponse'],
+      (data['dateTime'] as Timestamp).toDate(),
     );
 
     return model;
