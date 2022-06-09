@@ -12,7 +12,7 @@ class _ManageQuarRecState extends State<ManageQuarRec> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        child: Text('3'),
+        child: Text('sdsdfe'),
       ),
     );
   }
