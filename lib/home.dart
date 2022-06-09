@@ -19,7 +19,6 @@ class _HomeState extends State<Home> {
     ManageQuarRec(),
     UManageQuarRec(),
     ManageQuarRec(),
-    UManageQuarRec(),
   ];
 
   void _onItemTapped(int index) {
