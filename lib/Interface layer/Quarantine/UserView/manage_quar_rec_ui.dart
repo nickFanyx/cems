@@ -113,32 +113,28 @@ class _UManageQuarRecState extends State<UManageQuarRec> {
               fontSize: 15,
             ),
           ),
-          SingleChildScrollView(
-            child: Container(
-              height: 400,
-              color: Colors.white,
-              child: StreamBuilder<QuerySnapshot>(
-                stream: manageBloc.getData(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.hasError) {
-                    return const Text('Something went wrong');
-                  }
+          Expanded(
+            child: StreamBuilder<QuerySnapshot>(
+              stream: manageBloc.getData(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.hasError) {
+                  return const Text('Something went wrong');
+                }
 
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Text("Loading");
-                  }
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Text("Loading");
+                }
 
-                  return ListView(
-                    children:
-                        snapshot.data!.docs.map((DocumentSnapshot document) {
-                      Map<String, dynamic> data =
-                          document.data()! as Map<String, dynamic>;
-                      return listitem(data);
-                    }).toList(),
-                  );
-                },
-              ),
+                return ListView(
+                  children:
+                      snapshot.data!.docs.map((DocumentSnapshot document) {
+                    Map<String, dynamic> data =
+                        document.data()! as Map<String, dynamic>;
+                    return listitem(data);
+                  }).toList(),
+                );
+              },
             ),
           ),
         ],

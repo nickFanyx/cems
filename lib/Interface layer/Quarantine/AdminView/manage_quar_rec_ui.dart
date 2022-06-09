@@ -1,4 +1,5 @@
 import 'package:cems/BLoC%20layer/Quarantine/AdminBloc/manage_quar_rec_bloc.dart';
+import 'package:cems/Data%20layer/Quarantine/quar_record.dart';
 import 'package:cems/Interface%20layer/Quarantine/AdminView/manage_daily.dart';
 import 'package:cems/Interface%20layer/Quarantine/AdminView/view_quar_rec_ui.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,84 @@ class ManageQuarRec extends StatefulWidget {
 
 class _ManageQuarRecState extends State<ManageQuarRec> {
   AManageQRBloc manageQRBloc = AManageQRBloc();
+  TextEditingController _searchController = TextEditingController();
+
+  late Future resultsLoaded;
+  List _allResults = [];
+  List _resultsList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _searchController.addListener(_onSearchChanged);
+  }
+
+  @override
+  void dispose() {
+    _searchController.removeListener(_onSearchChanged);
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    resultsLoaded = getRecordStreamSnapshot();
+  }
+
+  _onSearchChanged() {
+    searchResultsList();
+  }
+
+  searchResultsList() {
+    var showResults = [];
+
+    if (_searchController.text != "") {
+      for (var recSnapshot in _allResults) {
+        List<String> keyword;
+        var snap = QuarantineModel.fromSnapshot(recSnapshot);
+        keyword = [
+          snap.userId,
+          snap.usertype,
+          snap.symptomsDetail,
+          snap.patientName,
+          snap.patientNo,
+          snap.quarantinePlace,
+          snap.quarantineAddress,
+          snap.testResult,
+          snap.verifyResult,
+          snap.username,
+          snap.staffResponse,
+          DateFormat('MMMM d, yyyy – KK : mm a')
+              .format(((snap.dateTime)))
+              .toString(),
+        ];
+        var data = keyword.toString().toLowerCase();
+
+        if (data.contains(_searchController.text.toLowerCase())) {
+          showResults.add(recSnapshot);
+        }
+      }
+    } else {
+      showResults = List.from(_allResults);
+    }
+    setState(() {
+      _resultsList = showResults;
+    });
+  }
+
+  getRecordStreamSnapshot() async {
+    var data = await FirebaseFirestore.instance
+        .collection("QuarantineRecord")
+        .orderBy("dateTime", descending: true)
+        .get();
+    setState(() {
+      _allResults = data.docs;
+    });
+    searchResultsList();
+    return "complete";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,58 +104,53 @@ class _ManageQuarRecState extends State<ManageQuarRec> {
               fontSize: 15,
             ),
           ),
-          SingleChildScrollView(
-            child: Container(
-              height: 580,
-              color: Colors.white,
-              child: StreamBuilder<QuerySnapshot>(
-                stream: manageQRBloc.getData(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.hasError) {
-                    return const Text('Something went wrong');
-                  }
-
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Text("Loading");
-                  }
-
-                  return ListView(
-                    children:
-                        snapshot.data!.docs.map((DocumentSnapshot document) {
-                      Map<String, dynamic> data =
-                          document.data()! as Map<String, dynamic>;
-                      return listitem(data);
-                    }).toList(),
-                  );
-                },
+          Padding(
+            padding:
+                const EdgeInsets.only(left: 30.0, right: 30.0, bottom: 20.0),
+            child: TextField(
+              controller: _searchController,
+              decoration: InputDecoration(
+                prefixIcon: Icon(Icons.search),
+                hintText: "Enter keyword",
               ),
+            ),
+          ),
+          Expanded(
+            child: _resultsList == []
+                ? const Text('Loading')
+                : ListView.builder(
+                    itemCount: _resultsList.length,
+                    itemBuilder: (context, index) {
+                      return manageQRBloc.listit(context, _resultsList[index]);
+                    },
+                  ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(4, 0, 4, 0),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.redAccent,
+                minimumSize: const Size.fromHeight(40),
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ManageDailyStat(),
+                  ),
+                );
+              },
+              child: const Text('View Daily Status'),
             ),
           ),
         ],
       ),
-      bottomSheet: Padding(
-        padding: const EdgeInsets.fromLTRB(4, 0, 4, 0),
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            primary: Colors.redAccent,
-            minimumSize: const Size.fromHeight(40),
-          ),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const ManageDailyStat(),
-              ),
-            );
-          },
-          child: const Text('View Daily Status'),
-        ),
-      ),
     );
   }
 
-  Widget listitem(data) {
+  Widget listit(BuildContext context, DocumentSnapshot document) {
+    QuarantineModel rec = QuarantineModel.fromSnapshot(document);
+
     return Card(
       color: Colors.white,
       elevation: 10,
@@ -89,7 +163,7 @@ class _ManageQuarRecState extends State<ManageQuarRec> {
             context,
             MaterialPageRoute(
               builder: (context) => AViewRecUI(
-                qrModel: manageQRBloc.creatingModel(data),
+                qrModel: rec,
               ),
             ),
           );
@@ -115,7 +189,7 @@ class _ManageQuarRecState extends State<ManageQuarRec> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    data['usertype'],
+                    rec.usertype,
                     style: const TextStyle(
                       fontSize: 20,
                     ),
@@ -125,7 +199,7 @@ class _ManageQuarRecState extends State<ManageQuarRec> {
                   ),
                   Text(
                     DateFormat('MMMM d, yyyy – KK : mm a')
-                        .format(((data['dateTime'] as Timestamp).toDate())),
+                        .format(((rec.dateTime))),
                     style: const TextStyle(
                       fontSize: 15,
                     ),
@@ -141,7 +215,7 @@ class _ManageQuarRecState extends State<ManageQuarRec> {
                   color: Colors.red,
                   height: 15,
                   child: Text(
-                    data['verifyResult'],
+                    rec.verifyResult,
                     style: const TextStyle(
                       fontSize: 12,
                       color: Colors.white,
