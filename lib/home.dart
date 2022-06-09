@@ -1,6 +1,4 @@
-import 'package:cems/Interface%20layer/Quarantine/AdminView/add_patient_ui.dart';
 import 'package:cems/Interface%20layer/Quarantine/AdminView/manage_quar_rec_ui.dart';
-import 'package:cems/Interface%20layer/Quarantine/AdminView/verify_quar_rec_ui.dart';
 import 'package:cems/Interface%20layer/Quarantine/UserView/manage_quar_rec_ui.dart';
 import 'package:flutter/material.dart';
 
@@ -15,11 +13,11 @@ class _HomeState extends State<Home> {
   int _selectedIndex = 0;
 
   static const List<Widget> _list = [
-    AddPatient(),
-    ManageQuarRec(),
-    VerifyQuarRec(),
     UManageQuarRec(),
-    VerifyQuarRec(),
+    ManageQuarRec(),
+    UManageQuarRec(),
+    UManageQuarRec(),
+    UManageQuarRec(),
   ];
 
   void _onItemTapped(int index) {

@@ -148,7 +148,7 @@ class _UManageQuarRecState extends State<UManageQuarRec> {
 
   Widget listitem(data) {
     return Card(
-      color: Colors.redAccent,
+      color: Colors.white,
       elevation: 10,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
@@ -188,21 +188,36 @@ class _UManageQuarRecState extends State<UManageQuarRec> {
                     data['usertype'],
                     style: const TextStyle(
                       fontSize: 20,
-                      color: Colors.white,
                     ),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 15,
                   ),
                   Text(
                     DateFormat('MMMM d, yyyy – KK : mm a')
                         .format(((data['dateTime'] as Timestamp).toDate())),
                     style: const TextStyle(
                       fontSize: 15,
-                      color: Colors.white,
                     ),
                   ),
                 ],
+              ),
+              const SizedBox(
+                width: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  color: Colors.red,
+                  height: 15,
+                  child: Text(
+                    data['verifyResult'],
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
               ),
             ],
           ),

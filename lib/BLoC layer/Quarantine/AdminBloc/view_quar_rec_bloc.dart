@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class AdViewQRRecbloc {
@@ -19,5 +20,23 @@ class AdViewQRRecbloc {
     } else {
       return lowrisk;
     }
+  }
+
+  Future verifyRes(
+    String recordId,
+    String verifyResult,
+    String response,
+  ) async {
+    CollectionReference record =
+        FirebaseFirestore.instance.collection('QuarantineRecord');
+
+    await record
+        .doc(recordId)
+        .update({
+          'verifyResult': verifyResult,
+          'staffResponse': response,
+        })
+        .then((value) => print("Record Updated"))
+        .catchError((error) => print("Failed to update record: $error"));
   }
 }

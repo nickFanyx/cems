@@ -1,4 +1,5 @@
 import 'package:cems/BLoC%20layer/Quarantine/AdminBloc/manage_quar_rec_bloc.dart';
+import 'package:cems/Interface%20layer/Quarantine/AdminView/manage_daily.dart';
 import 'package:cems/Interface%20layer/Quarantine/AdminView/view_quar_rec_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -54,20 +55,30 @@ class _ManageQuarRecState extends State<ManageQuarRec> {
           ),
         ],
       ),
-      bottomSheet: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          primary: Colors.redAccent,
-          minimumSize: const Size.fromHeight(40),
+      bottomSheet: Padding(
+        padding: const EdgeInsets.fromLTRB(4, 0, 4, 0),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: Colors.redAccent,
+            minimumSize: const Size.fromHeight(40),
+          ),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ManageDailyStat(),
+              ),
+            );
+          },
+          child: const Text('View Daily Status'),
         ),
-        onPressed: () {},
-        child: const Text('View Daily Status'),
       ),
     );
   }
 
   Widget listitem(data) {
     return Card(
-      color: Colors.redAccent,
+      color: Colors.white,
       elevation: 10,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
@@ -107,31 +118,36 @@ class _ManageQuarRecState extends State<ManageQuarRec> {
                     data['usertype'],
                     style: const TextStyle(
                       fontSize: 20,
-                      color: Colors.white,
                     ),
                   ),
                   const SizedBox(
-                    height: 5,
-                  ),
-                  Container(
-                    color: Colors.white,
                     height: 15,
-                    child: Text(
-                      data['verifyResult'],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 5,
                   ),
                   Text(
                     DateFormat('MMMM d, yyyy – KK : mm a')
                         .format(((data['dateTime'] as Timestamp).toDate())),
                     style: const TextStyle(
                       fontSize: 15,
-                      color: Colors.white,
                     ),
                   ),
                 ],
+              ),
+              const SizedBox(
+                width: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  color: Colors.red,
+                  height: 15,
+                  child: Text(
+                    data['verifyResult'],
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
