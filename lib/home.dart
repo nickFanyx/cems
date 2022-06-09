@@ -14,13 +14,11 @@ class _HomeState extends State<Home> {
   int _selectedIndex = 0;
 
   static const List<Widget> _list = [
-    AddPatient(),
-    UCheckInRec(),
-    VerifyQuarRec(),
     UManageQuarRec(),
+    UCheckInRec(),
     ManageQuarRec(),
     UManageQuarRec(),
-    UManageQuarRec(),
+    ManageQuarRec(),
     UManageQuarRec(),
   ];
 
