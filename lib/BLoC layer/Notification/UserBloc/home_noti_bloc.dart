@@ -5,17 +5,17 @@ class UHomeBloc {
   getData() {
     return FirebaseFirestore.instance
         .collection("NotificationRecord")
-        .orderBy("user_id", descending: false)
+        .where("user_id", isEqualTo: "1")
         .snapshots();
   }
 
   NotificationModel creatingModel(var data) {
     NotificationModel model = NotificationModel(
-      data['notification_id'],
-      data['user_id'],
-      data['notification_title'],
-      data['notification_description'],
-    );
+        data['notification_id'],
+        data['user_id'],
+        data['notification_title'],
+        data['notification_description'],
+        data['notification_details']);
 
     return model;
   }
