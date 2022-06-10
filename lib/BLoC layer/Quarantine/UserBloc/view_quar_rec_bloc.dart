@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class ViewQRRecord {
@@ -19,5 +20,15 @@ class ViewQRRecord {
     } else {
       return lowrisk;
     }
+  }
+
+  Future<void> deleteRec(String recordId) async {
+    CollectionReference rec =
+        FirebaseFirestore.instance.collection('QuarantineRecord');
+    return rec
+        .doc(recordId)
+        .delete()
+        .then((value) => print("record deleted"))
+        .catchError((error) => print("Failed to delete user: $error"));
   }
 }
