@@ -10,8 +10,12 @@ class AViewRecUI extends StatefulWidget {
   State<AViewRecUI> createState() => _AViewRecUIState();
 }
 
+enum result { ConfirmCase, LowRisk }
+
 class _AViewRecUIState extends State<AViewRecUI> {
   AdViewQRRecbloc viewBloc = AdViewQRRecbloc();
+  String response = "";
+  result? _res;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -268,6 +272,129 @@ class _AViewRecUIState extends State<AViewRecUI> {
                           ),
                         ),
                       ),
+                    ),
+              widget.qrModel.verifyResult == "Not Verify"
+                  ? Column(
+                      children: [
+                        Card(
+                          color: Colors.white,
+                          elevation: 10,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: SizedBox(
+                              width: 340,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text('Verify Result?'),
+                                    RadioListTile<result>(
+                                      title: const Text('Confirmed Case'),
+                                      value: result.ConfirmCase,
+                                      groupValue: _res,
+                                      onChanged: (result? value) {
+                                        setState(() {
+                                          _res = value;
+                                        });
+                                      },
+                                    ),
+                                    RadioListTile<result>(
+                                      title: const Text('Low Risk'),
+                                      value: result.LowRisk,
+                                      groupValue: _res,
+                                      onChanged: (result? value) {
+                                        setState(() {
+                                          _res = value;
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Card(
+                          color: Colors.white,
+                          elevation: 10,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: SizedBox(
+                              width: 340,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text('Give response to patient:'),
+                                    const SizedBox(
+                                      height: 15,
+                                    ),
+                                    TextField(
+                                      onChanged: (value) => response = value,
+                                      decoration: const InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        hintText: 'Response',
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.redAccent,
+                              minimumSize: const Size.fromHeight(40),
+                            ),
+                            onPressed: () {
+                              viewBloc.verifyRes(
+                                widget.qrModel.recordid,
+                                _res == result.ConfirmCase
+                                    ? "Confirmed Case"
+                                    : "Low Risk",
+                                response,
+                              );
+                              showDialog<String>(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (BuildContext context) => AlertDialog(
+                                  title: const Text('Verified!'),
+                                  content: const Text('Record verified!'),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context, 'OK');
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text('OK'),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                            child: const Text(
+                              'SUBMIT',
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  : const SizedBox(
+                      height: 0,
                     ),
             ],
           ),

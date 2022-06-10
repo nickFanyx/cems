@@ -1,6 +1,6 @@
 import 'package:cems/Interface%20layer/Quarantine/AdminView/manage_quar_rec_ui.dart';
-import 'package:cems/Interface%20layer/Quarantine/AdminView/verify_quar_rec_ui.dart';
 import 'package:cems/Interface%20layer/Quarantine/UserView/manage_quar_rec_ui.dart';
+import 'package:cems/Interface%20layer/Movement/UserView/checkin_dashboard_ui.dart';
 import 'package:flutter/material.dart';
 
 import 'Interface layer/Notification/UserView/home_noti_ui.dart';
@@ -17,10 +17,10 @@ class _HomeState extends State<Home> {
 
   static const List<Widget> _list = [
     UHomeNoti(),
+    UCheckInRec(),
     ManageQuarRec(),
-    VerifyQuarRec(),
     UManageQuarRec(),
-    VerifyQuarRec(),
+    ManageQuarRec(),
   ];
 
   void _onItemTapped(int index) {
