@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ManageQRRecordBloc {
   getData() {
-    String userId = "0418393272";
+    String userId = "0148393272";
     return FirebaseFirestore.instance
         .collection("QuarantineRecord")
         .where("userId", isEqualTo: userId)
