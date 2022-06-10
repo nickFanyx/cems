@@ -16,8 +16,9 @@ class _HomeState extends State<Home> {
   static const List<Widget> _list = [
     UManageQuarRec(),
     UCheckInRec(),
-    ManageQuarRec(),
     UManageQuarRec(),
+    UManageQuarRec(),
+    UCheckInRec(),
     ManageQuarRec(),
   ];
 
