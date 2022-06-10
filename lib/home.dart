@@ -14,14 +14,11 @@ class _HomeState extends State<Home> {
   int _selectedIndex = 0;
 
   static const List<Widget> _list = [
-    AddPatient(),
+    UManageQuarRec(),
     UCheckInRec(),
-    VerifyQuarRec(),
+    UManageQuarRec(),
     UManageQuarRec(),
     ManageQuarRec(),
-    UManageQuarRec(),
-    UManageQuarRec(),
-    UManageQuarRec(),
   ];
 
   void _onItemTapped(int index) {
