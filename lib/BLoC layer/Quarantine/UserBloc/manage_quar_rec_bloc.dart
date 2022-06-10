@@ -3,8 +3,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ManageQRRecordBloc {
   getData() {
+    String userId = "0418393272";
     return FirebaseFirestore.instance
         .collection("QuarantineRecord")
+        .where("userId", isEqualTo: userId)
         .orderBy("dateTime", descending: true)
         .snapshots();
   }
