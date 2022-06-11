@@ -11,8 +11,8 @@ class UHomeBloc {
 
   NotificationModel creatingModel(var data) {
     NotificationModel model = NotificationModel(
-        data['notification_id'],
         data['user_id'],
+        data['notification_id'],
         data['notification_title'],
         data['notification_description'],
         data['notification_details']);

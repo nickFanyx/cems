@@ -12,11 +12,12 @@ class AAddNoti extends StatefulWidget {
 
 class _AAddNotiState extends State<AAddNoti> {
   AddNotiBloc addNotiBloc = AddNotiBloc();
-  String user_id = "";
+
   String notification_id = "";
   String notification_title = "";
   String notification_description = "";
   String notification_details = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,30 +25,27 @@ class _AAddNotiState extends State<AAddNoti> {
         title: const Text('Add Notification'),
       ),
       body: SingleChildScrollView(
-        child: Center(
-            child: Column(
-          children: [
-            const SizedBox(
-              height: 10,
+          child: Center(
+        child: Column(children: [
+          const SizedBox(
+            height: 10,
+          ),
+          Card(
+            color: Colors.white,
+            elevation: 10,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
             ),
-            Card(
-              color: Colors.white,
-              elevation: 10,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: SizedBox(
-                  width: 340,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
+            child: SizedBox(
+                width: 350,
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('Title:'),
+                        const Text('Notification Title'),
                         const SizedBox(
-                          height: 15,
+                          height: 10,
                         ),
                         TextField(
                           onChanged: (value) => notification_title = value,
@@ -56,30 +54,25 @@ class _AAddNotiState extends State<AAddNoti> {
                             hintText: 'Title',
                           ),
                         )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+                      ]),
+                )),
+          ),
+          Card(
+            color: Colors.white,
+            elevation: 10,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
             ),
-            Card(
-              color: Colors.white,
-              elevation: 10,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: SizedBox(
-                  width: 340,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
+            child: SizedBox(
+                width: 350,
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('Description:'),
+                        const Text('Notification Description'),
                         const SizedBox(
-                          height: 15,
+                          height: 10,
                         ),
                         TextField(
                           onChanged: (value) =>
@@ -89,30 +82,25 @@ class _AAddNotiState extends State<AAddNoti> {
                             hintText: 'Description',
                           ),
                         )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+                      ]),
+                )),
+          ),
+          Card(
+            color: Colors.white,
+            elevation: 10,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
             ),
-            Card(
-              color: Colors.white,
-              elevation: 10,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: SizedBox(
-                  width: 340,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
+            child: SizedBox(
+                width: 350,
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('Details:'),
+                        const Text('Notification Details'),
                         const SizedBox(
-                          height: 15,
+                          height: 10,
                         ),
                         TextField(
                           onChanged: (value) => notification_details = value,
@@ -121,39 +109,30 @@ class _AAddNotiState extends State<AAddNoti> {
                             hintText: 'Details',
                           ),
                         )
-                      ],
-                    ),
-                  ),
+                      ]),
+                )),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.redAccent,
+                minimumSize: const Size.fromHeight(40),
+              ),
+              onPressed: () {
+                addNotiBloc.addNoti("1", notification_id, notification_title,
+                    notification_description, notification_details);
+              },
+              child: const Text(
+                'Publish',
+                style: TextStyle(
+                  color: Colors.white,
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.redAccent,
-                  minimumSize: const Size.fromHeight(40),
-                ),
-                onPressed: () {
-                  addNotiBloc.addNoti(
-                    user_id,
-                    notification_id,
-                    notification_title,
-                    notification_description,
-                    notification_details,
-                  );
-                },
-                child: const Text(
-                  'Publish',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            )
-          ],
-        )),
-      ),
+          )
+        ]),
+      )),
     );
   }
 }
