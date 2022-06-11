@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
+import 'Interface layer/Notification/AdminView/add_noti_ui.dart';
+
 class HomeAdmin extends StatefulWidget {
   const HomeAdmin({Key? key}) : super(key: key);
 
@@ -18,7 +20,7 @@ class _HomeAdminState extends State<HomeAdmin> {
   Widget build(BuildContext context) {
     var container;
     if (currentPage == DrawerSections.dashboard) {
-      container = const ManageQuarRec();
+      container = const AAddNoti();
     } else if (currentPage == DrawerSections.uservaccination) {
       container = const ManageQuarRec();
     } else if (currentPage == DrawerSections.uservaccinationregis) {
