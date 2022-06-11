@@ -143,7 +143,7 @@ class _UCheckInRecState extends State<UCheckInRec> {
               ),
             ),
             const SizedBox(
-              height: 120,
+              height: 100,
             ),
             SizedBox(
               width: 400,

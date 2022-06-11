@@ -18,6 +18,37 @@ class _UViewQuarRecState extends State<UViewQuarRec> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Quarantine Information'),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.delete),
+            onPressed: () {
+              showDialog<String>(
+                context: context,
+                barrierDismissible: false,
+                builder: (BuildContext context) => AlertDialog(
+                  title: const Text('Alert!'),
+                  content: const Text('Are you sure to delete this record?'),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context, 'NO');
+                      },
+                      child: const Text('NO'),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        viewBloc.deleteRec(widget.qrModel.recordid);
+                        Navigator.pop(context, 'YES');
+                        Navigator.pop(context);
+                      },
+                      child: const Text('YES'),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Center(

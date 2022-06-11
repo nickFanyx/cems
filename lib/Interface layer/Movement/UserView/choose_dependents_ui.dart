@@ -28,7 +28,7 @@ class _UChooseDepState extends State<UChooseDep> {
           const Divider(),
           ...notifications.map(buildSingleCheckbox).toList(),
           const SizedBox(
-            height: 350,
+            height: 330,
           ),
           Padding(
             padding: const EdgeInsets.all(30),
