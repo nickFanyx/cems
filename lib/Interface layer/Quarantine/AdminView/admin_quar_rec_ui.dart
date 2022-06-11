@@ -1,4 +1,4 @@
-import 'package:cems/BLoC%20layer/Quarantine/AdminBloc/manage_quar_rec_bloc.dart';
+import 'package:cems/BLoC%20layer/Quarantine/AdminBloc/admin_quar_rec_bloc.dart';
 import 'package:cems/Data%20layer/Quarantine/quar_record.dart';
 import 'package:cems/Interface%20layer/Quarantine/AdminView/manage_daily.dart';
 import 'package:cems/Interface%20layer/Quarantine/AdminView/view_quar_rec_ui.dart';
