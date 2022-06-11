@@ -1,8 +1,7 @@
 import 'package:cems/Interface%20layer/Quarantine/AdminView/manage_quar_rec_ui.dart';
 import 'package:cems/header.dart';
 import 'package:flutter/material.dart';
-
-import 'Interface layer/Notification/AdminView/add_noti_ui.dart';
+import 'Interface layer/Notification/AdminView/noti_dashboard_ui.dart';
 
 class HomeAdmin extends StatefulWidget {
   const HomeAdmin({Key? key}) : super(key: key);
@@ -18,7 +17,7 @@ class _HomeAdminState extends State<HomeAdmin> {
   Widget build(BuildContext context) {
     var container;
     if (currentPage == DrawerSections.dashboard) {
-      container = const AAddNoti();
+      container = const ANotiDashboard();
     } else if (currentPage == DrawerSections.uservaccination) {
       container = const ManageQuarRec();
     } else if (currentPage == DrawerSections.uservaccinationregis) {
