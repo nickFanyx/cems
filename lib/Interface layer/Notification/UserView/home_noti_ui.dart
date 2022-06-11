@@ -15,15 +15,18 @@ class _UHomeNoti extends State<UHomeNoti> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Notification Dashboard'),
+      ),
       body: Column(
         children: [
-          const Text(
-            'Notifications',
-            style: TextStyle(
-              fontSize: 17,
-              height: 2.5,
-            ),
-          ),
+          // const Text(
+          //   'Notifications',
+          //   style: TextStyle(
+          //     fontSize: 17,
+          //     height: 2.5,
+          //   ),
+          // ),
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
               stream: homeBloc.getData(),

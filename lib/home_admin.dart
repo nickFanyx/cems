@@ -1,7 +1,9 @@
+import 'package:cems/Interface%20layer/News/AdminView/news_dashboard_ui.dart';
 import 'package:cems/Interface%20layer/Quarantine/AdminView/manage_quar_rec_ui.dart';
 import 'package:cems/header.dart';
 import 'package:flutter/material.dart';
 import 'Interface layer/Notification/AdminView/noti_dashboard_ui.dart';
+import 'Interface layer/News/AdminView/add_news_ui.dart';
 
 class HomeAdmin extends StatefulWidget {
   const HomeAdmin({Key? key}) : super(key: key);
@@ -17,7 +19,7 @@ class _HomeAdminState extends State<HomeAdmin> {
   Widget build(BuildContext context) {
     var container;
     if (currentPage == DrawerSections.dashboard) {
-      container = const ANotiDashboard();
+      container = const ANewsDashboard();
     } else if (currentPage == DrawerSections.uservaccination) {
       container = const ManageQuarRec();
     } else if (currentPage == DrawerSections.uservaccinationregis) {
@@ -34,6 +36,19 @@ class _HomeAdminState extends State<HomeAdmin> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('CEMS'),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.notifications),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ANotiDashboard(),
+                ),
+              );
+            },
+          )
+        ],
       ),
       body: container,
       drawer: Drawer(

@@ -1,3 +1,4 @@
+import 'package:cems/Interface%20layer/News/UserView/news_home_ui.dart';
 import 'package:cems/Interface%20layer/Quarantine/AdminView/manage_quar_rec_ui.dart';
 import 'package:cems/Interface%20layer/Quarantine/UserView/manage_quar_rec_ui.dart';
 import 'package:cems/Interface%20layer/Movement/UserView/checkin_dashboard_ui.dart';
@@ -16,7 +17,7 @@ class _HomeState extends State<Home> {
   int _selectedIndex = 0;
 
   static const List<Widget> _list = [
-    UHomeNoti(),
+    UNewsHome(),
     UCheckInRec(),
     UManageQuarRec(),
     UManageQuarRec(),

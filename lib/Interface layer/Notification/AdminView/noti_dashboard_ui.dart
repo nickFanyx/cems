@@ -18,15 +18,19 @@ class _ANotiDashboardState extends State<ANotiDashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Notification Dashboard'),
+      ),
       body: Column(
         children: [
-          const Text(
-            'Notification Dashboard',
-            style: TextStyle(
-              fontSize: 17,
-              height: 2.5,
-            ),
-          ),
+          // const Text(
+          //   'Notification Dashboard',
+          //   style: TextStyle(
+          //     fontSize: 18,
+          //     fontWeight: FontWeight.bold,
+          //     height: 2.5,
+          //   ),
+          // ),
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
               stream: notiDashboardBloc.getData(),
