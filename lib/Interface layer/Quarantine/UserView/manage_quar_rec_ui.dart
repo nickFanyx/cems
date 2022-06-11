@@ -199,7 +199,7 @@ class _UManageQuarRecState extends State<UManageQuarRec> {
                 ],
               ),
               const SizedBox(
-                width: 20,
+                width: 18,
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),

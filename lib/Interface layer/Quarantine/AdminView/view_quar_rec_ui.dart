@@ -16,11 +16,43 @@ class _AViewRecUIState extends State<AViewRecUI> {
   AdViewQRRecbloc viewBloc = AdViewQRRecbloc();
   String response = "";
   result? _res;
+  bool validRes = false, validResponse = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Quarantine Information'),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.delete),
+            onPressed: () {
+              showDialog<String>(
+                context: context,
+                barrierDismissible: false,
+                builder: (BuildContext context) => AlertDialog(
+                  title: const Text('Alert!'),
+                  content: const Text('Are you sure to delete this record?'),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context, 'NO');
+                      },
+                      child: const Text('NO'),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        viewBloc.deleteRec(widget.qrModel.recordid);
+                        Navigator.pop(context, 'YES');
+                        Navigator.pop(context, true);
+                      },
+                      child: const Text('YES'),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -312,6 +344,14 @@ class _AViewRecUIState extends State<AViewRecUI> {
                                         });
                                       },
                                     ),
+                                    validRes == false
+                                        ? const SizedBox()
+                                        : const Text(
+                                            "Please select verify result!",
+                                            style: TextStyle(
+                                              color: Colors.red,
+                                            ),
+                                          ),
                                   ],
                                 ),
                               ),
@@ -343,7 +383,15 @@ class _AViewRecUIState extends State<AViewRecUI> {
                                         border: OutlineInputBorder(),
                                         hintText: 'Response',
                                       ),
-                                    )
+                                    ),
+                                    validResponse == false
+                                        ? const SizedBox()
+                                        : const Text(
+                                            "Please enter response!",
+                                            style: TextStyle(
+                                              color: Colors.red,
+                                            ),
+                                          ),
                                   ],
                                 ),
                               ),
@@ -358,30 +406,52 @@ class _AViewRecUIState extends State<AViewRecUI> {
                               minimumSize: const Size.fromHeight(40),
                             ),
                             onPressed: () {
-                              viewBloc.verifyRes(
-                                widget.qrModel.recordid,
-                                _res == result.ConfirmCase
-                                    ? "Confirmed Case"
-                                    : "Low Risk",
-                                response,
-                              );
-                              showDialog<String>(
-                                context: context,
-                                barrierDismissible: false,
-                                builder: (BuildContext context) => AlertDialog(
-                                  title: const Text('Verified!'),
-                                  content: const Text('Record verified!'),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.pop(context, 'OK');
-                                        Navigator.pop(context);
-                                      },
-                                      child: const Text('OK'),
-                                    ),
-                                  ],
-                                ),
-                              );
+                              if (_res == null) {
+                                setState(() {
+                                  validRes = true;
+                                });
+                              } else {
+                                setState(() {
+                                  validRes = false;
+                                });
+                              }
+                              if (response == "") {
+                                setState(() {
+                                  validResponse = true;
+                                });
+                              } else {
+                                setState(() {
+                                  validResponse = false;
+                                });
+                              }
+
+                              if (validResponse == false && validRes == false) {
+                                viewBloc.verifyRes(
+                                  widget.qrModel.recordid,
+                                  _res == result.ConfirmCase
+                                      ? "Confirmed Case"
+                                      : "Low Risk",
+                                  response,
+                                );
+                                showDialog<String>(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (BuildContext context) =>
+                                      AlertDialog(
+                                    title: const Text('Verified!'),
+                                    content: const Text('Record verified!'),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context, 'OK');
+                                          Navigator.pop(context, true);
+                                        },
+                                        child: const Text('OK'),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }
                             },
                             child: const Text(
                               'SUBMIT',
