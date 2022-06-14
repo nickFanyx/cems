@@ -1,5 +1,5 @@
 import 'package:cems/BLoC%20layer/News/AdminBloc/news_dashboard_bloc.dart';
-import 'package:cems/Interface%20layer/News/AdminView/view_news_ui.dart';
+import 'package:cems/Interface%20layer/News/AdminView/view_news_dashboard_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';

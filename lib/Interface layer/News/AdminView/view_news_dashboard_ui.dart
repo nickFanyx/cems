@@ -1,24 +1,25 @@
-import 'package:cems/BLoC%20layer/Notification/AdminBloc/view_dashboard_bloc.dart';
-import 'package:cems/Data%20layer/Notification/notification.record.dart';
+import 'package:cems/BLoC%20layer/News/AdminBloc/view_news_bloc.dart';
+import 'package:cems/Data%20layer/News/news_record.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-class AViewDashboard extends StatefulWidget {
-  final NotificationModel notiModel;
-  const AViewDashboard({Key? key, required this.notiModel}) : super(key: key);
+class AViewNewsDashboard extends StatefulWidget {
+  final NewsModel newsModel;
+  const AViewNewsDashboard({Key? key, required this.newsModel})
+      : super(key: key);
 
   @override
-  State<AViewDashboard> createState() => _AViewDashboardState();
+  State<AViewNewsDashboard> createState() => _AViewNewsDashboardState();
 }
 
-class _AViewDashboardState extends State<AViewDashboard> {
-  ViewDashboardBloc viewDashboardBloc = ViewDashboardBloc();
+class _AViewNewsDashboardState extends State<AViewNewsDashboard> {
+  ViewDashboardNewsBloc viewDashboardNewsBloc = ViewDashboardNewsBloc();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Notification Details'),
+        title: const Text('News Details'),
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -44,7 +45,7 @@ class _AViewDashboardState extends State<AViewDashboard> {
                         const SizedBox(
                           width: 10,
                         ),
-                        Text(' ${widget.notiModel.user_id}'),
+                        Text(' ${widget.newsModel.user_id}'),
                       ],
                     ),
                   ),
@@ -68,7 +69,7 @@ class _AViewDashboardState extends State<AViewDashboard> {
                         const SizedBox(
                           width: 10,
                         ),
-                        Text(' ${widget.notiModel.notification_id}'),
+                        Text(' ${widget.newsModel.news_id}'),
                       ],
                     ),
                   ),
@@ -92,7 +93,7 @@ class _AViewDashboardState extends State<AViewDashboard> {
                         const SizedBox(
                           width: 10,
                         ),
-                        Text(' ${widget.notiModel.notification_title}'),
+                        Text(' ${widget.newsModel.news_title}'),
                       ],
                     ),
                   ),
@@ -116,7 +117,7 @@ class _AViewDashboardState extends State<AViewDashboard> {
                         const SizedBox(
                           width: 10,
                         ),
-                        Text(' ${widget.notiModel.notification_description}'),
+                        Text(' ${widget.newsModel.news_description}'),
                       ],
                     ),
                   ),
@@ -142,8 +143,7 @@ class _AViewDashboardState extends State<AViewDashboard> {
                         ),
                         SizedBox(
                           width: 320,
-                          child:
-                              Text(' ${widget.notiModel.notification_details}'),
+                          child: Text(' ${widget.newsModel.news_details}'),
                         )
                       ],
                     ),
@@ -164,13 +164,12 @@ class _AViewDashboardState extends State<AViewDashboard> {
                     barrierDismissible: false,
                     builder: (BuildContext context) => AlertDialog(
                       title: const Text('Delete?'),
-                      content: const Text(
-                          'Are you sure you want to delete this notification?'),
+                      content: const Text('Are you sure want to delete this news?'),
                       actions: <Widget>[
                         TextButton(
                           onPressed: () {
-                            viewDashboardBloc
-                                .deleteNoti(widget.notiModel.notification_id);
+                            viewDashboardNewsBloc
+                                .deleteNoti(widget.newsModel.news_id);
                             Navigator.pop(context, 'YES');
                             Navigator.pop(context);
                           },
@@ -180,12 +179,7 @@ class _AViewDashboardState extends State<AViewDashboard> {
                     ),
                   );
                 },
-                child: const Text(
-                  'Delete Notification',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
+                child: Text("Delete Notification"),
               ),
             )
           ],
