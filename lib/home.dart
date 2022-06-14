@@ -1,3 +1,4 @@
+import 'package:cems/Interface%20layer/Login/UserView/user_login_menu_ui.dart';
 import 'package:cems/Interface%20layer/Quarantine/AdminView/manage_quar_rec_ui.dart';
 import 'package:cems/Interface%20layer/Quarantine/UserView/manage_quar_rec_ui.dart';
 import 'package:flutter/material.dart';
@@ -34,10 +35,11 @@ class _HomeState extends State<Home> {
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.person),
-            tooltip: 'Show Snackbar',
             onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('This is a snackbar')));
+              Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => User_Login()),
+              );
             },
           ),
         ],
