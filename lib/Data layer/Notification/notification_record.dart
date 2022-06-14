@@ -1,4 +1,5 @@
 class NotificationModel {
+  //create model for notification
   final String user_id;
   final String notification_id;
   final String notification_title;
@@ -13,6 +14,7 @@ class NotificationModel {
     this.notification_details,
   );
 
+//insert db
   Map<String, dynamic> toJson() => {
         'user_id': user_id,
         'notification_id': notification_id,

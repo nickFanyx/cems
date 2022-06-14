@@ -1,4 +1,4 @@
-import 'package:cems/Data%20layer/Notification/notification.record.dart';
+import 'package:cems/Data%20layer/Notification/notification_record.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UHomeBloc {

@@ -1,5 +1,5 @@
 import 'package:cems/BLoC%20layer/Notification/AdminBloc/view_dashboard_bloc.dart';
-import 'package:cems/Data%20layer/Notification/notification.record.dart';
+import 'package:cems/Data%20layer/Notification/notification_record.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';

@@ -1,8 +1,10 @@
+//importing packages
 import 'package:cems/BLoC%20layer/Notification/UserBloc/home_noti_bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:cems/Interface layer/Notification/UserView/view_noti_ui.dart';
 
+//using Stateful widget
 class UHomeNoti extends StatefulWidget {
   const UHomeNoti({Key? key}) : super(key: key);
 
@@ -11,23 +13,19 @@ class UHomeNoti extends StatefulWidget {
 }
 
 class _UHomeNoti extends State<UHomeNoti> {
+  //connecting bloc
   UHomeBloc homeBloc = UHomeBloc();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Notification Dashboard'),
+        title: const Text('Notification'),
       ),
       body: Column(
         children: [
-          // const Text(
-          //   'Notifications',
-          //   style: TextStyle(
-          //     fontSize: 17,
-          //     height: 2.5,
-          //   ),
-          // ),
+
           Expanded(
+            //getdata / fetch data from db
             child: StreamBuilder<QuerySnapshot>(
               stream: homeBloc.getData(),
               builder: (BuildContext context,
