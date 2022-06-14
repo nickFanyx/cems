@@ -1,6 +1,7 @@
 import 'package:cems/Interface%20layer/News/UserView/news_home_ui.dart';
 import 'package:cems/Interface%20layer/Quarantine/UserView/manage_quar_rec_ui.dart';
 import 'package:cems/Interface%20layer/Movement/UserView/checkin_dashboard_ui.dart';
+import 'package:cems/Interface%20layer/Vaccination/UserView/vacc_status_ui.dart';
 import 'package:flutter/material.dart';
 import 'Interface layer/Notification/UserView/home_noti_ui.dart';
 
@@ -19,7 +20,7 @@ class _HomeState extends State<Home> {
     UCheckInRec(),
     UManageQuarRec(),
     UManageQuarRec(),
-    UCheckInRec(),
+    CheckStatus(),
   ];
 
   void _onItemTapped(int index) {
