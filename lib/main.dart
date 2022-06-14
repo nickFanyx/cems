@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       theme: theme(),
       home: AnimatedSplashScreen(
-        nextScreen: const HomeAdmin(),
+        nextScreen: const Home(),
         splash: 'assets/images/cemsicon.png',
         splashIconSize: 200,
         splashTransition: SplashTransition.slideTransition,

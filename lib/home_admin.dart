@@ -1,5 +1,5 @@
 import 'package:cems/Interface%20layer/News/AdminView/news_dashboard_ui.dart';
-import 'package:cems/Interface%20layer/Quarantine/AdminView/manage_quar_rec_ui.dart';
+import 'package:cems/Interface%20layer/Quarantine/AdminView/admin_quar_rec_ui.dart';
 import 'package:cems/header.dart';
 import 'package:flutter/material.dart';
 import 'Interface layer/Notification/AdminView/noti_dashboard_ui.dart';
