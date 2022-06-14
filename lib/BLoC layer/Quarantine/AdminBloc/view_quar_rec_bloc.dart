@@ -39,4 +39,14 @@ class AdViewQRRecbloc {
         .then((value) => print("Record Updated"))
         .catchError((error) => print("Failed to update record: $error"));
   }
+
+  Future<void> deleteRec(String recordId) async {
+    CollectionReference rec =
+        FirebaseFirestore.instance.collection('QuarantineRecord');
+    return rec
+        .doc(recordId)
+        .delete()
+        .then((value) => print("record deleted"))
+        .catchError((error) => print("Failed to delete user: $error"));
+  }
 }

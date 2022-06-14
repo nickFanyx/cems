@@ -1,7 +1,8 @@
-import 'package:cems/Interface%20layer/Login/UserView/user_login_menu_ui.dart';
-import 'package:cems/Interface%20layer/Quarantine/AdminView/manage_quar_rec_ui.dart';
+import 'package:cems/Interface%20layer/News/UserView/news_home_ui.dart';
 import 'package:cems/Interface%20layer/Quarantine/UserView/manage_quar_rec_ui.dart';
+import 'package:cems/Interface%20layer/Movement/UserView/checkin_dashboard_ui.dart';
 import 'package:flutter/material.dart';
+import 'Interface layer/Notification/UserView/home_noti_ui.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -14,11 +15,11 @@ class _HomeState extends State<Home> {
   int _selectedIndex = 0;
 
   static const List<Widget> _list = [
+    UNewsHome(),
+    UCheckInRec(),
     UManageQuarRec(),
-    ManageQuarRec(),
     UManageQuarRec(),
-    UManageQuarRec(),
-    UManageQuarRec(),
+    UCheckInRec(),
   ];
 
   void _onItemTapped(int index) {
@@ -35,11 +36,10 @@ class _HomeState extends State<Home> {
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.person),
+            tooltip: 'Show Snackbar',
             onPressed: () {
-              Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => User_Login()),
-              );
+              ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('This is a snackbar')));
             },
           ),
         ],

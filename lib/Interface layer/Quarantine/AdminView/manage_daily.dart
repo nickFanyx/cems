@@ -20,31 +20,32 @@ class _ManageDailyStatState extends State<ManageDailyStat> {
       appBar: AppBar(
         title: const Text('Daily Status'),
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          height: 400,
-          color: Colors.white,
-          child: StreamBuilder<QuerySnapshot>(
-            stream: manageDailybloc.getData(),
-            builder:
-                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (snapshot.hasError) {
-                return const Text('Something went wrong');
-              }
+      body: Column(
+        children: [
+          Expanded(
+            child: StreamBuilder<QuerySnapshot>(
+              stream: manageDailybloc.getData(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.hasError) {
+                  return const Text('Something went wrong');
+                }
 
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Text("Loading");
-              }
-              return ListView(
-                children: snapshot.data!.docs.map((DocumentSnapshot document) {
-                  Map<String, dynamic> data =
-                      document.data()! as Map<String, dynamic>;
-                  return listitem(data);
-                }).toList(),
-              );
-            },
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Text("Loading");
+                }
+                return ListView(
+                  children:
+                      snapshot.data!.docs.map((DocumentSnapshot document) {
+                    Map<String, dynamic> data =
+                        document.data()! as Map<String, dynamic>;
+                    return listitem(data);
+                  }).toList(),
+                );
+              },
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
