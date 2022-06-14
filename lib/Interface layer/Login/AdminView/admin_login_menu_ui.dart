@@ -1,5 +1,6 @@
 import 'package:cems/BLoC%20layer/Login/AdminBloc/admin_login_menu_bloc.dart';
 import 'package:cems/home.dart';
+import 'package:cems/home_admin.dart';
 import 'package:cems/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -119,7 +120,7 @@ class _Admin_Login extends State<Admin_Login> {
             onPressed: () { 
               Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => Home())
+              MaterialPageRoute(builder: (context) => HomeAdmin())
               );
             },
             child: Text(
