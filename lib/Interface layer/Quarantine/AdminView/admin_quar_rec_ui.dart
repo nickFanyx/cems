@@ -1,4 +1,4 @@
-import 'package:cems/BLoC%20layer/Quarantine/AdminBloc/manage_quar_rec_bloc.dart';
+import 'package:cems/BLoC%20layer/Quarantine/AdminBloc/admin_quar_rec_bloc.dart';
 import 'package:cems/Data%20layer/Quarantine/quar_record.dart';
 import 'package:cems/Interface%20layer/Quarantine/AdminView/manage_daily.dart';
 import 'package:cems/Interface%20layer/Quarantine/AdminView/view_quar_rec_ui.dart';
@@ -20,6 +20,14 @@ class _ManageQuarRecState extends State<ManageQuarRec> {
   late Future resultsLoaded;
   List _allResults = [];
   List _resultsList = [];
+
+  void refresh() {
+    setState(() {
+      _searchController.addListener(_onSearchChanged);
+      getRecordStreamSnapshot();
+      searchResultsList();
+    });
+  }
 
   @override
   void initState() {
@@ -121,7 +129,7 @@ class _ManageQuarRecState extends State<ManageQuarRec> {
                 : ListView.builder(
                     itemCount: _resultsList.length,
                     itemBuilder: (context, index) {
-                      return manageQRBloc.listit(context, _resultsList[index]);
+                      return listit(context, _resultsList[index]);
                     },
                   ),
           ),
@@ -132,7 +140,7 @@ class _ManageQuarRecState extends State<ManageQuarRec> {
                 primary: Colors.redAccent,
                 minimumSize: const Size.fromHeight(40),
               ),
-              onPressed: () {
+              onPressed: () async {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -158,8 +166,8 @@ class _ManageQuarRecState extends State<ManageQuarRec> {
         borderRadius: BorderRadius.circular(10),
       ),
       child: InkWell(
-        onTap: () {
-          Navigator.push(
+        onTap: () async {
+          final value = await Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => AViewRecUI(
@@ -167,6 +175,9 @@ class _ManageQuarRecState extends State<ManageQuarRec> {
               ),
             ),
           );
+          if (value == true) {
+            refresh();
+          }
         },
         child: SizedBox(
           width: 300,
@@ -207,7 +218,7 @@ class _ManageQuarRecState extends State<ManageQuarRec> {
                 ],
               ),
               const SizedBox(
-                width: 20,
+                width: 18,
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),

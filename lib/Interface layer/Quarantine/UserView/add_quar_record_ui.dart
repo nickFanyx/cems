@@ -23,6 +23,7 @@ class _UAddQuarRecState extends State<UAddQuarRec> {
   Typee? _typed;
   Placee? _plate;
   CovRes? _res;
+  bool validType = false, validPlace = false, validRes = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,6 +71,14 @@ class _UAddQuarRecState extends State<UAddQuarRec> {
                             });
                           },
                         ),
+                        validType == false
+                            ? const SizedBox()
+                            : const Text(
+                                "Plesea Select Type!",
+                                style: TextStyle(
+                                  color: Colors.red,
+                                ),
+                              )
                       ],
                     ),
                   ),
@@ -188,6 +197,14 @@ class _UAddQuarRecState extends State<UAddQuarRec> {
                             });
                           },
                         ),
+                        validPlace == false
+                            ? const SizedBox()
+                            : const Text(
+                                "Plesea Select Place!",
+                                style: TextStyle(
+                                  color: Colors.red,
+                                ),
+                              ),
                         const SizedBox(
                           height: 10,
                         ),
@@ -242,6 +259,14 @@ class _UAddQuarRecState extends State<UAddQuarRec> {
                             });
                           },
                         ),
+                        validRes == false
+                            ? const SizedBox()
+                            : const Text(
+                                "Plesea Select Result!",
+                                style: TextStyle(
+                                  color: Colors.red,
+                                ),
+                              ),
                       ],
                     ),
                   ),
@@ -255,35 +280,66 @@ class _UAddQuarRecState extends State<UAddQuarRec> {
                     minimumSize: const Size.fromHeight(40),
                   ),
                   onPressed: () {
-                    addQuarRecordBloc.addRecord(
-                      "0148393272",
-                      _typed == Typee.Symptoms ? "Symptoms" : "Close Contact",
-                      symptom,
-                      patientName,
-                      patientPhone,
-                      _plate == Placee.Home ? "Home" : "Quarantine Center",
-                      currAdd,
-                      _res == CovRes.Positive ? "Positive" : "Negative",
-                      "Nik Ahmad Farihin",
-                    );
-                    showDialog<String>(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (BuildContext context) => AlertDialog(
-                        title: const Text('Added!'),
-                        content:
-                            const Text('Quarantine Record Added Successfully!'),
-                        actions: <Widget>[
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pop(context, 'OK');
-                              Navigator.pop(context);
-                            },
-                            child: const Text('OK'),
-                          ),
-                        ],
-                      ),
-                    );
+                    if (_typed == null) {
+                      setState(() {
+                        validType = true;
+                      });
+                    } else {
+                      setState(() {
+                        validType = false;
+                      });
+                    }
+                    if (_plate == null) {
+                      setState(() {
+                        validPlace = true;
+                      });
+                    } else {
+                      setState(() {
+                        validPlace = false;
+                      });
+                    }
+                    if (_res == null) {
+                      setState(() {
+                        validRes = true;
+                      });
+                    } else {
+                      setState(() {
+                        validRes = false;
+                      });
+                    }
+                    if (validPlace == false &&
+                        validRes == false &&
+                        validType == false) {
+                      addQuarRecordBloc.addRecord(
+                        "0148393272",
+                        _typed == Typee.Symptoms ? "Symptoms" : "Close Contact",
+                        symptom,
+                        patientName,
+                        patientPhone,
+                        _plate == Placee.Home ? "Home" : "Quarantine Center",
+                        currAdd,
+                        _res == CovRes.Positive ? "Positive" : "Negative",
+                        "Nik Ahmad Farihin",
+                      );
+                      showDialog<String>(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (BuildContext context) => AlertDialog(
+                          title: const Text('Added!'),
+                          content: const Text(
+                              'Quarantine Record Added Successfully!'),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context, 'OK');
+                                Navigator.pop(context);
+                              },
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
                   },
                   child: const Text(
                     'SUBMIT',

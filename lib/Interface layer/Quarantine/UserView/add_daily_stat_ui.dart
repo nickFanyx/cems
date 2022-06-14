@@ -21,6 +21,7 @@ class _UAddDailyStatState extends State<UAddDailyStat> {
   bool headache = false;
 
   Call? _called;
+  bool validEmer = false;
 
   @override
   Widget build(BuildContext context) {
@@ -179,6 +180,14 @@ class _UAddDailyStatState extends State<UAddDailyStat> {
                             });
                           },
                         ),
+                        validEmer == false
+                            ? const SizedBox()
+                            : const Text(
+                                "Please select option!",
+                                style: TextStyle(
+                                  color: Colors.red,
+                                ),
+                              ),
                       ],
                     ),
                   ),
@@ -192,37 +201,46 @@ class _UAddDailyStatState extends State<UAddDailyStat> {
                     minimumSize: const Size.fromHeight(40),
                   ),
                   onPressed: () {
-                    dailyBloc.addDaily(
-                        "0148393272",
-                        [
-                          fever,
-                          shivering,
-                          soreThroat,
-                          runnyNose,
-                          bodyAche,
-                          headache,
-                        ],
-                        _called == Call.yes ? true : false,
-                        "Nik Ahmad Farihin");
-                    showDialog<String>(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (BuildContext context) => AlertDialog(
-                        title: const Text('Submitted!'),
-                        content: Text(_called == Call.yes
-                            ? 'Our MOH Staff will contact you within 3 minutes.\n\nPlease Dial 999 if there is no call.'
-                            : 'Daily status submitted successfully.'),
-                        actions: <Widget>[
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pop(context, 'OK');
-                              Navigator.pop(context);
-                            },
-                            child: const Text('OK'),
-                          ),
-                        ],
-                      ),
-                    );
+                    if (_called == null) {
+                      setState(() {
+                        validEmer = true;
+                      });
+                    } else {
+                      setState(() {
+                        validEmer = false;
+                      });
+                      dailyBloc.addDaily(
+                          "0148393272",
+                          [
+                            fever,
+                            shivering,
+                            soreThroat,
+                            runnyNose,
+                            bodyAche,
+                            headache,
+                          ],
+                          _called == Call.yes ? true : false,
+                          "Nik Ahmad Farihin");
+                      showDialog<String>(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (BuildContext context) => AlertDialog(
+                          title: const Text('Submitted!'),
+                          content: Text(_called == Call.yes
+                              ? 'Our MOH Staff will contact you within 3 minutes.\n\nPlease Dial 999 if there is no call.'
+                              : 'Daily status submitted successfully.'),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context, 'OK');
+                                Navigator.pop(context);
+                              },
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
                   },
                   child: const Text(
                     'SUBMIT',
