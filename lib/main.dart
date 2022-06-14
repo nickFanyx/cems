@@ -1,6 +1,5 @@
 //importing packages
 import 'package:cems/home.dart';
-import 'package:cems/home_admin.dart';
 import 'package:cems/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
