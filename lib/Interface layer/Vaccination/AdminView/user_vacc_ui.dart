@@ -48,7 +48,7 @@ class _UserVaccinationState extends State<UserVaccination> {
                             height: 50,
                             child: Row(children: const [
                               SizedBox(
-                                width: 100,
+                                width: 80,
                               ),
                               Text(
                                 'User Vaccination',
