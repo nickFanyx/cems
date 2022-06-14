@@ -1,5 +1,6 @@
 // ignore_for_file: unused_import
 
+import 'package:cems/Interface%20layer/Vaccination/UserView/check_status_ui.dart';
 import 'package:cems/Interface%20layer/Vaccination/UserView/dependent_status_ui.dart';
 import 'package:cems/Interface%20layer/Vaccination/UserView/dependent_vacc_ui.dart';
 import 'package:cems/Interface%20layer/Vaccination/UserView/vacc_cert_ui.dart';
@@ -46,7 +47,13 @@ class CheckStatusState extends State<CheckStatus> {
                       ),
                       Center(
                         child: InkWell(
-                          onTap: () {},
+                          onTap: () => {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const Vaccination()),
+                            ),
+                          },
                           child: Card(
                               elevation: 10,
                               shape: RoundedRectangleBorder(
