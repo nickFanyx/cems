@@ -1,5 +1,6 @@
 import 'package:cems/Interface%20layer/Quarantine/AdminView/manage_quar_rec_ui.dart';
 import 'package:cems/Interface%20layer/Quarantine/UserView/manage_quar_rec_ui.dart';
+import 'package:cems/Interface%20layer/Vaccination/UserView/vacc_status_ui.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -17,7 +18,7 @@ class _HomeState extends State<Home> {
     ManageQuarRec(),
     UManageQuarRec(),
     UManageQuarRec(),
-    UManageQuarRec(),
+    CheckStatus(),
   ];
 
   void _onItemTapped(int index) {
