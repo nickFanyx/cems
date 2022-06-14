@@ -1,4 +1,5 @@
 //importing packages
+import 'package:cems/Interface%20layer/Login/UserView/user_login_menu_ui.dart';
 import 'package:cems/home.dart';
 import 'package:cems/theme.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       theme: theme(),
       home: AnimatedSplashScreen(
-        nextScreen: const Home(),
+        nextScreen: const User_Login(),
         splash: 'assets/images/cemsicon.png',
         splashIconSize: 200,
         splashTransition: SplashTransition.slideTransition,
