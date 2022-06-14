@@ -1,7 +1,8 @@
-import 'package:cems/Interface%20layer/Quarantine/AdminView/manage_quar_rec_ui.dart';
+import 'package:cems/Interface%20layer/News/UserView/news_home_ui.dart';
 import 'package:cems/Interface%20layer/Quarantine/UserView/manage_quar_rec_ui.dart';
-import 'package:cems/Interface%20layer/Vaccination/UserView/vacc_status_ui.dart';
+import 'package:cems/Interface%20layer/Movement/UserView/checkin_dashboard_ui.dart';
 import 'package:flutter/material.dart';
+import 'Interface layer/Notification/UserView/home_noti_ui.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -14,11 +15,11 @@ class _HomeState extends State<Home> {
   int _selectedIndex = 0;
 
   static const List<Widget> _list = [
+    UNewsHome(),
+    UCheckInRec(),
     UManageQuarRec(),
-    ManageQuarRec(),
     UManageQuarRec(),
-    UManageQuarRec(),
-    CheckStatus(),
+    UCheckInRec(),
   ];
 
   void _onItemTapped(int index) {

@@ -1,12 +1,15 @@
 import 'package:cems/Data%20layer/Quarantine/quar_record.dart';
+import 'package:cems/Interface%20layer/Quarantine/AdminView/view_quar_rec_ui.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class AManageQRBloc {
-  getData() {
+  getQuery() async {
     return FirebaseFirestore.instance
         .collection("QuarantineRecord")
         .orderBy("dateTime", descending: true)
-        .snapshots();
+        .get();
   }
 
   QuarantineModel creatingModel(var data) {

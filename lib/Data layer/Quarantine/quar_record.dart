@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class QuarantineModel {
   final String recordid;
   final String userId;
@@ -44,4 +46,19 @@ class QuarantineModel {
         'staffResponse': staffResponse,
         'dateTime': dateTime,
       };
+
+  QuarantineModel.fromSnapshot(DocumentSnapshot snapshot)
+      : recordid = snapshot['recordid'],
+        userId = snapshot['userId'],
+        usertype = snapshot['usertype'],
+        symptomsDetail = snapshot['symptomsDetail'],
+        patientName = snapshot['patientName'],
+        patientNo = snapshot['patientNo'],
+        quarantinePlace = snapshot['quarantinePlace'],
+        quarantineAddress = snapshot['quarantineAddress'],
+        testResult = snapshot['testResult'],
+        verifyResult = snapshot['verifyResult'],
+        username = snapshot['username'],
+        staffResponse = snapshot['staffResponse'],
+        dateTime = (snapshot['dateTime'] as Timestamp).toDate();
 }
