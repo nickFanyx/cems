@@ -31,7 +31,6 @@ class QuarantineModel {
     this.dateTime,
   );
 
-  //change object to json
   Map<String, dynamic> toJson() => {
         'recordid': recordid,
         'userId': userId,
@@ -48,7 +47,6 @@ class QuarantineModel {
         'dateTime': dateTime,
       };
 
-  //change snapshot to model object
   QuarantineModel.fromSnapshot(DocumentSnapshot snapshot)
       : recordid = snapshot['recordid'],
         userId = snapshot['userId'],

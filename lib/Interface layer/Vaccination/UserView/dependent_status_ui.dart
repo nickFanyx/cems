@@ -72,7 +72,7 @@ class _DependentStatusState extends State<DependentStatus> {
                                     width: 10,
                                   ),
                                   Text(
-                                    'Person 1',
+                                    'ALI BIN ABU',
                                     style: TextStyle(fontSize: 20),
                                   )
                                 ],
@@ -116,7 +116,7 @@ class _DependentStatusState extends State<DependentStatus> {
                                     width: 10,
                                   ),
                                   Text(
-                                    'Person 2',
+                                    'MAYA ARISA BINTI ABU',
                                     style: TextStyle(fontSize: 20),
                                   ),
                                 ]),

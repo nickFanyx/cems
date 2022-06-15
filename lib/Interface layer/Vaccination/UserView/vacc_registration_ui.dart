@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import, unnecessary_import, implementation_imports
+
 import 'package:cems/Interface%20layer/Vaccination/UserView/dependent_vacc_ui.dart';
 import 'package:cems/Interface%20layer/Vaccination/UserView/vacc_status_ui.dart';
 import 'package:cems/BLoC layer/Vaccination/UserBloc/vacc_registration_bloc.dart';
@@ -22,7 +24,7 @@ enum Disease { yes, no }
 enum OKU { yes, no }
 
 class _VaccRegisterState extends State<VaccRegister> {
-  VaccRegisterBloc vaccRegister = VaccRegisterBloc();
+  VaccRegister vaccRegisterBloc = const VaccRegister();
 
   Interest? _called;
   Disease? _disease;
@@ -155,7 +157,7 @@ class _VaccRegisterState extends State<VaccRegister> {
                                   minimumSize: const Size.fromHeight(40),
                                 ),
                                 onPressed: () {
-                                  vaccRegister.vaccRegister(
+                                  vaccRegisterBloc.vaccRegister(
                                       "01139003358",
                                       _called == Interest.yes ? true : false,
                                       _disease == Disease.no ? true : false,

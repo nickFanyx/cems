@@ -1,8 +1,4 @@
-import 'package:cems/BLoC%20layer/Movement/UserBloc/mov_history_bloc.dart';
-import 'package:cems/Data%20layer/Movement/move_record.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:intl/intl.dart';
 
 class UMovHistoryRec extends StatefulWidget {
   const UMovHistoryRec({Key? key}) : super(key: key);
@@ -12,189 +8,483 @@ class UMovHistoryRec extends StatefulWidget {
 }
 
 class _UMovHistoryRecState extends State<UMovHistoryRec> {
-  UMovHistoryBloc viewHistoryBloc = UMovHistoryBloc();
-  TextEditingController _searchController = TextEditingController();
-
-  late Future resultsLoaded;
-  List _allResults = [];
-  List _resultsList = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _searchController.addListener(_onSearchChanged);
-  }
-
-  @override
-  void dispose() {
-    _searchController.removeListener(_onSearchChanged);
-    _searchController.dispose();
-    super.dispose();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    resultsLoaded = getRecordStreamSnapshot();
-  }
-
-  _onSearchChanged() {
-    searchResultsList();
-  }
-
-  searchResultsList() {
-    var showResults = [];
-
-    if (_searchController.text != "") {
-      for (var recSnapshot in _allResults) {
-        List<String> keyword;
-        var snap = MovementModel.fromSnapshot(recSnapshot);
-        keyword = [
-          snap.userId,
-          snap.locationName,
-          snap.movStatus,
-          snap.name,
-          snap.riskLevel,
-          snap.vacStatus,
-          DateFormat('MMMM d, yyyy – KK : mm a')
-              .format(((snap.dateTime)))
-              .toString(),
-        ];
-        var data = keyword.toString().toLowerCase();
-
-        if (data.contains(_searchController.text.toLowerCase())) {
-          showResults.add(recSnapshot);
-        }
-      }
-    } else {
-      showResults = List.from(_allResults);
-    }
-    setState(() {
-      _resultsList = showResults;
-    });
-  }
-
-  getRecordStreamSnapshot() async {
-    var data = await FirebaseFirestore.instance
-        .collection("MovementRecord")
-        .orderBy("dateTime", descending: true)
-        .get();
-    setState(() {
-      _allResults = data.docs;
-    });
-    searchResultsList();
-    return "complete";
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          const SizedBox(height: 20),
-          const Text(
-            "Movement Record List",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              inherit: true,
-              letterSpacing: 0.4,
-            ),
-          ),
-          const SizedBox(height: 20),
-          Padding(
-            padding:
-                const EdgeInsets.only(left: 30.0, right: 30.0, bottom: 20.0),
-            child: TextField(
-              controller: _searchController,
-              decoration: const InputDecoration(
-                prefixIcon: Icon(Icons.search),
-                hintText: "Enter keyword",
-              ),
-            ),
-          ),
-          Expanded(
-            child: _resultsList == []
-                ? const Text('Loading')
-                : ListView.builder(
-                    itemCount: _resultsList.length,
-                    itemBuilder: (context, index) {
-                      return viewHistoryBloc.listit(
-                          context, _resultsList[index]);
-                    },
-                  ),
-          ),
-        ],
+      appBar: AppBar(
+        title: const Text('History'),
       ),
-    );
-  }
-
-  Widget listit(BuildContext context, DocumentSnapshot document) {
-    MovementModel rec = MovementModel.fromSnapshot(document);
-
-    return Card(
-      color: Colors.white,
-      elevation: 10,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: InkWell(
-        child: SizedBox(
-          width: 300,
-          height: 90,
-          child: Row(
-            children: [
-              const SizedBox(
-                width: 20,
-              ),
-              const Image(
-                image: AssetImage('assets/images/location.png'),
-                width: 50,
-                height: 50,
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    rec.name,
-                    style: const TextStyle(
-                      fontSize: 20,
-                    ),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 14, horizontal: 18),
+                  margin: const EdgeInsets.only(
+                    bottom: 20,
                   ),
-                  const SizedBox(
-                    height: 15,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.2),
+                        spreadRadius: 1.0,
+                        blurRadius: 6.0,
+                      )
+                    ],
                   ),
-                  Text(
-                    DateFormat('MMMM d, yyyy – KK : mm a')
-                        .format(((rec.dateTime))),
-                    style: const TextStyle(
-                      fontSize: 15,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                width: 20,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  color: Colors.pink,
-                  height: 15,
-                  child: Text(
-                    rec.movStatus,
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: Colors.white,
-                    ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          const Image(
+                            image: AssetImage('assets/images/location.png'),
+                            width: 50,
+                            height: 80,
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              RichText(
+                                text: const TextSpan(
+                                  text: 'wellness\n',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    height: 1.3,
+                                  ),
+                                  children: [
+                                    TextSpan(
+                                      text: "Kedai Pak Mat",
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: "\nDec 12, 2021, 11:06:40 PM",
+                                      style: TextStyle(
+                                        color: Colors.black45,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 6,
+                              ),
+                              ElevatedButton(
+                                style: OutlinedButton.styleFrom(
+                                  backgroundColor:
+                                      const Color.fromARGB(255, 34, 187, 51),
+                                  primary: Colors.white,
+                                ),
+                                onPressed: () {},
+                                child: const Text(
+                                  "Checked in",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 13,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
-              ),
-            ],
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 14, horizontal: 18),
+                  margin: const EdgeInsets.only(
+                    bottom: 20,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.2),
+                        spreadRadius: 1.0,
+                        blurRadius: 6.0,
+                      )
+                    ],
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          const Image(
+                            image: AssetImage('assets/images/location.png'),
+                            width: 50,
+                            height: 80,
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              RichText(
+                                text: const TextSpan(
+                                  text: 'wellness\n',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    height: 1.3,
+                                  ),
+                                  children: [
+                                    TextSpan(
+                                      text: "Kedai Pak Abu",
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: "\nDec 12, 2021, 11:06:40 PM",
+                                      style: TextStyle(
+                                        color: Colors.black45,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 6,
+                              ),
+                              ElevatedButton(
+                                style: OutlinedButton.styleFrom(
+                                  backgroundColor:
+                                      const Color.fromARGB(255, 187, 33, 36),
+                                  primary: Colors.white,
+                                ),
+                                onPressed: () {},
+                                child: const Text(
+                                  "Checked out",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 13,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 14, horizontal: 18),
+                  margin: const EdgeInsets.only(
+                    bottom: 20,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.2),
+                        spreadRadius: 1.0,
+                        blurRadius: 6.0,
+                      )
+                    ],
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          const Image(
+                            image: AssetImage('assets/images/location.png'),
+                            width: 50,
+                            height: 80,
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              RichText(
+                                text: const TextSpan(
+                                  text: 'wellness\n',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    height: 1.3,
+                                  ),
+                                  children: [
+                                    TextSpan(
+                                      text: "Kedai Pak Ali",
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: "\nDec 12, 2021, 11:06:40 PM",
+                                      style: TextStyle(
+                                        color: Colors.black45,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 6,
+                              ),
+                              ElevatedButton(
+                                style: OutlinedButton.styleFrom(
+                                  backgroundColor:
+                                      const Color.fromARGB(255, 187, 33, 36),
+                                  primary: Colors.white,
+                                ),
+                                onPressed: () {},
+                                child: const Text(
+                                  "Checked out",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 13,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 14, horizontal: 18),
+                  margin: const EdgeInsets.only(
+                    bottom: 20,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.2),
+                        spreadRadius: 1.0,
+                        blurRadius: 6.0,
+                      )
+                    ],
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          const Image(
+                            image: AssetImage('assets/images/location.png'),
+                            width: 50,
+                            height: 80,
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              RichText(
+                                text: const TextSpan(
+                                  text: 'wellness\n',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    height: 1.3,
+                                  ),
+                                  children: [
+                                    TextSpan(
+                                      text: "Kedai Pak Hasan",
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: "\nDec 12, 2021, 11:06:40 PM",
+                                      style: TextStyle(
+                                        color: Colors.black45,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 6,
+                              ),
+                              ElevatedButton(
+                                style: OutlinedButton.styleFrom(
+                                  backgroundColor:
+                                      const Color.fromARGB(255, 187, 33, 36),
+                                  primary: Colors.white,
+                                ),
+                                onPressed: () {},
+                                child: const Text(
+                                  "Checked out",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 13,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 14, horizontal: 18),
+                  margin: const EdgeInsets.only(
+                    bottom: 20,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.2),
+                        spreadRadius: 1.0,
+                        blurRadius: 6.0,
+                      )
+                    ],
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          const Image(
+                            image: AssetImage('assets/images/location.png'),
+                            width: 50,
+                            height: 80,
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              RichText(
+                                text: const TextSpan(
+                                  text: 'wellness\n',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    height: 1.3,
+                                  ),
+                                  children: [
+                                    TextSpan(
+                                      text: "Kedai Pak Cik",
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: "\nDec 12, 2021, 11:06:40 PM",
+                                      style: TextStyle(
+                                        color: Colors.black45,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 6,
+                              ),
+                              ElevatedButton(
+                                style: OutlinedButton.styleFrom(
+                                  backgroundColor:
+                                      const Color.fromARGB(255, 187, 33, 36),
+                                  primary: Colors.white,
+                                ),
+                                onPressed: () {},
+                                child: const Text(
+                                  "Checked out",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 13,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
