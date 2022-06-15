@@ -2,10 +2,8 @@ import 'package:cems/Data%20layer/Quarantine/quar_record.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ManageQRRecordBloc {
-  //query read quarantine record
   getData() {
     String userId = "0148393272";
-    //query
     return FirebaseFirestore.instance
         .collection("QuarantineRecord")
         .where("userId", isEqualTo: userId)
@@ -13,9 +11,7 @@ class ManageQRRecordBloc {
         .snapshots();
   }
 
-  //create object
   QuarantineModel creatingModel(var data) {
-    //create
     QuarantineModel model = QuarantineModel(
       data['recordid'],
       data['userId'],
