@@ -1,8 +1,11 @@
+//import packages
+import 'package:cems/BLoC%20layer/Notification/AdminBloc/edit_noti_bloc.dart';
 import 'package:cems/BLoC%20layer/Notification/AdminBloc/view_dashboard_bloc.dart';
 import 'package:cems/Data%20layer/Notification/notification_record.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:cems/Interface layer/Notification/AdminView/edit_noti_ui.dart';
 
 class AViewDashboard extends StatefulWidget {
   final NotificationModel notiModel;
@@ -12,12 +15,14 @@ class AViewDashboard extends StatefulWidget {
   State<AViewDashboard> createState() => _AViewDashboardState();
 }
 
+//connecting to bloc
 class _AViewDashboardState extends State<AViewDashboard> {
   ViewDashboardBloc viewDashboardBloc = ViewDashboardBloc();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        //page title
         title: const Text('Notification Details'),
       ),
       body: SingleChildScrollView(
@@ -41,6 +46,7 @@ class _AViewDashboardState extends State<AViewDashboard> {
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       children: [
+                        //display the fetched data from db
                         const SizedBox(
                           width: 10,
                         ),
@@ -65,6 +71,7 @@ class _AViewDashboardState extends State<AViewDashboard> {
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       children: [
+                        //display the fetched data from db
                         const SizedBox(
                           width: 10,
                         ),
@@ -89,6 +96,7 @@ class _AViewDashboardState extends State<AViewDashboard> {
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       children: [
+                        //display the fetched data from db
                         const SizedBox(
                           width: 10,
                         ),
@@ -113,6 +121,7 @@ class _AViewDashboardState extends State<AViewDashboard> {
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       children: [
+                        //display the fetched data from db
                         const SizedBox(
                           width: 10,
                         ),
@@ -141,6 +150,7 @@ class _AViewDashboardState extends State<AViewDashboard> {
                           width: 10,
                         ),
                         SizedBox(
+                          //display the fetched data from db
                           width: 320,
                           child:
                               Text(' ${widget.notiModel.notification_details}'),
@@ -154,6 +164,7 @@ class _AViewDashboardState extends State<AViewDashboard> {
             Padding(
               padding: const EdgeInsets.all(10),
               child: ElevatedButton(
+                //button delete
                 style: ElevatedButton.styleFrom(
                   primary: Colors.redAccent,
                   minimumSize: const Size.fromHeight(40),
@@ -180,6 +191,7 @@ class _AViewDashboardState extends State<AViewDashboard> {
                     ),
                   );
                 },
+                //delete button text
                 child: const Text(
                   'Delete Notification',
                   style: TextStyle(
@@ -187,7 +199,27 @@ class _AViewDashboardState extends State<AViewDashboard> {
                   ),
                 ),
               ),
-            )
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              //button update
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.blueAccent,
+                  minimumSize: const Size.fromHeight(40),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            AEditNoti(notiModel: widget.notiModel)),
+                  );
+                },
+                //edit button text
+                child: const Text('Edit Notification'),
+              ),
+            ),
           ],
         )),
       ),
