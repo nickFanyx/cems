@@ -71,7 +71,7 @@ class _DependentVaccState extends State<DependentVacc> {
                                 width: 10,
                               ),
                               Text(
-                                'ALI BIN ABU',
+                                'Person 1',
                                 style: TextStyle(fontSize: 20),
                               ),
                             ],
@@ -113,7 +113,7 @@ class _DependentVaccState extends State<DependentVacc> {
                               width: 10,
                             ),
                             Text(
-                              'MAYA ARISA BINTI ABU',
+                              'Person 2',
                               style: TextStyle(fontSize: 20),
                             ),
                           ]),

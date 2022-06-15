@@ -14,6 +14,7 @@ class DailyRec {
     this.dateTime,
   );
 
+  //change object to json
   Map<String, dynamic> toJson() => {
         'dailyId': dailyId,
         'userId': userId,
