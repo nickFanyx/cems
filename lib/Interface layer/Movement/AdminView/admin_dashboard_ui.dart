@@ -1,18 +1,19 @@
-import 'package:cems/BLoC%20layer/Movement/UserBloc/mov_history_bloc.dart';
+import 'package:cems/BLoC%20layer/Movement/AdminBloc/admin_dashboard_bloc.dart';
 import 'package:cems/Data%20layer/Movement/move_record.dart';
+import 'package:cems/Interface%20layer/Movement/AdminView/view_mov_rec_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
-class UMovHistoryRec extends StatefulWidget {
-  const UMovHistoryRec({Key? key}) : super(key: key);
+class AMovementRec extends StatefulWidget {
+  const AMovementRec({Key? key}) : super(key: key);
 
   @override
-  State<UMovHistoryRec> createState() => _UMovHistoryRecState();
+  State<AMovementRec> createState() => _AMovementRecState();
 }
 
-class _UMovHistoryRecState extends State<UMovHistoryRec> {
-  UMovHistoryBloc viewHistoryBloc = UMovHistoryBloc();
+class _AMovementRecState extends State<AMovementRec> {
+  AMovRecBloc manageMovBloc = AMovRecBloc();
   TextEditingController _searchController = TextEditingController();
 
   late Future resultsLoaded;
@@ -119,8 +120,7 @@ class _UMovHistoryRecState extends State<UMovHistoryRec> {
                 : ListView.builder(
                     itemCount: _resultsList.length,
                     itemBuilder: (context, index) {
-                      return viewHistoryBloc.listit(
-                          context, _resultsList[index]);
+                      return manageMovBloc.listit(context, _resultsList[index]);
                     },
                   ),
           ),
@@ -139,6 +139,16 @@ class _UMovHistoryRecState extends State<UMovHistoryRec> {
         borderRadius: BorderRadius.circular(10),
       ),
       child: InkWell(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AViewMoveRecUI(
+                mvModel: rec,
+              ),
+            ),
+          );
+        },
         child: SizedBox(
           width: 300,
           height: 90,
