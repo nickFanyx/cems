@@ -21,6 +21,7 @@ class _Admin_Login extends State<Admin_Login> {
           child: Column(
           children: [
          
+        //Image for logo
          Image(
           image: AssetImage('assets/images/cemsicon.png'),
           width: 250,
