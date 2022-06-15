@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:cems/BLoC%20layer/Movement/UserBloc/checkin_dashboard_bloc.dart';
 import 'mov_history_ui.dart';
 import 'choose_dependents_ui.dart';
 import 'checkout_dashboard_ui.dart';
@@ -12,6 +12,7 @@ class UCheckInRec extends StatefulWidget {
 }
 
 class _UCheckInRecState extends State<UCheckInRec> {
+  UCheckInRecBloc manageBloc = UCheckInRecBloc();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,7 +83,7 @@ class _UCheckInRecState extends State<UCheckInRec> {
                                   ),
                                 ),
                                 TextSpan(
-                                  text: "\nDec 12, 2021, 11:06:40 PM",
+                                  text: "\nDec 12, 2022, 11:06:40 PM",
                                   style: TextStyle(
                                     color: Colors.black45,
                                     fontSize: 15,
@@ -143,7 +144,7 @@ class _UCheckInRecState extends State<UCheckInRec> {
               ),
             ),
             const SizedBox(
-              height: 100,
+              height: 190,
             ),
             SizedBox(
               width: 400,

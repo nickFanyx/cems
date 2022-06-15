@@ -1,4 +1,5 @@
 import 'package:cems/Interface%20layer/Quarantine/AdminView/manage_quar_rec_ui.dart';
+import 'package:cems/Interface%20layer/Movement/AdminView/admin_dashboard_ui.dart';
 import 'package:cems/header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -28,7 +29,7 @@ class _HomeAdminState extends State<HomeAdmin> {
     } else if (currentPage == DrawerSections.profileregis) {
       container = const ManageQuarRec();
     } else if (currentPage == DrawerSections.checkincheck) {
-      container = const ManageQuarRec();
+      container = const AMovementRec();
     } else if (currentPage == DrawerSections.userquarrec) {
       container = const ManageQuarRec();
     }
