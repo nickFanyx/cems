@@ -1,5 +1,6 @@
 import 'package:cems/Interface%20layer/News/AdminView/news_dashboard_ui.dart';
 import 'package:cems/Interface%20layer/Quarantine/AdminView/admin_quar_rec_ui.dart';
+import 'package:cems/Interface%20layer/Vaccination/AdminView/user_vacc_register_ui.dart';
 import 'package:cems/Interface%20layer/Vaccination/AdminView/user_vacc_ui.dart';
 import 'package:cems/Interface%20layer/Vaccination/AdminView/vacc_verification_ui.dart';
 import 'package:cems/header.dart';
@@ -25,7 +26,7 @@ class _HomeAdminState extends State<HomeAdmin> {
     } else if (currentPage == DrawerSections.uservaccination) {
       container = const UserVaccination();
     } else if (currentPage == DrawerSections.uservaccinationregis) {
-      container = const ManageQuarRec();
+      container = const UserVaccRegister();
     } else if (currentPage == DrawerSections.vaccineverification) {
       container = const VaccVerify();
     } else if (currentPage == DrawerSections.profileregis) {
