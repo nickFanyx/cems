@@ -1,3 +1,4 @@
+import 'package:cems/BLoC%20layer/Movement/UserBloc/choose_dependents_bloc.dart';
 import 'package:flutter/material.dart';
 import 'user_dashboard_ui.dart';
 
@@ -9,6 +10,7 @@ class UChooseDep extends StatefulWidget {
 }
 
 class _UChooseDepState extends State<UChooseDep> {
+  AddMovRecordBloc addMovRecordBloc = AddMovRecordBloc();
   final allowNotifications = NotificationSetting(title: 'Select All');
 
   final notifications = [
@@ -16,6 +18,14 @@ class _UChooseDepState extends State<UChooseDep> {
     NotificationSetting(title: 'Dependent Two'),
     NotificationSetting(title: 'Dependent Three'),
   ];
+
+  String currAdd = "",
+      movStatus = "",
+      name = "",
+      riskLevel = "",
+      userId = "",
+      vacStatus = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +38,36 @@ class _UChooseDepState extends State<UChooseDep> {
           const Divider(),
           ...notifications.map(buildSingleCheckbox).toList(),
           const SizedBox(
-            height: 330,
+            height: 300,
+          ),
+          Card(
+            color: Colors.white,
+            elevation: 10,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: SizedBox(
+              width: 340,
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text('Enter location to check-in'),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    TextField(
+                      onChanged: (value) => currAdd = value,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Location Name',
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(30),
@@ -40,6 +79,33 @@ class _UChooseDepState extends State<UChooseDep> {
                 primary: Colors.white,
               ),
               onPressed: () {
+                addMovRecordBloc.addMovRecord(
+                  "01110109615",
+                  currAdd,
+                  "Check-In",
+                  "Nurin Azyyati Binti Kamilizahri",
+                  "Low Risk",
+                  "Fully Vaccinated",
+                );
+                showDialog<String>(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (BuildContext context) => AlertDialog(
+                    title: const Text('Added!'),
+                    content:
+                        const Text('Movement Record Added Successfully!'),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context, 'OK');
+                          Navigator.pop(context);
+                        },
+                        child: const Text('OK'),
+                      ),
+                    ],
+                  ),
+                );
+
                 Navigator.push(
                   context,
                   MaterialPageRoute(
