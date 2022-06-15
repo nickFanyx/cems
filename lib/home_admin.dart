@@ -3,6 +3,8 @@ import 'package:cems/Interface%20layer/Quarantine/AdminView/admin_quar_rec_ui.da
 import 'package:cems/Interface%20layer/Vaccination/AdminView/user_vacc_register_ui.dart';
 import 'package:cems/Interface%20layer/Vaccination/AdminView/user_vacc_ui.dart';
 import 'package:cems/Interface%20layer/Vaccination/AdminView/vacc_verification_ui.dart';
+import 'package:cems/Interface%20layer/Quarantine/AdminView/admin_quar_rec_ui.dart';
+import 'package:cems/Interface%20layer/Movement/AdminView/admin_dashboard_ui.dart';
 import 'package:cems/header.dart';
 import 'package:flutter/material.dart';
 import 'Interface layer/Notification/AdminView/noti_dashboard_ui.dart';
@@ -32,7 +34,7 @@ class _HomeAdminState extends State<HomeAdmin> {
     } else if (currentPage == DrawerSections.profileregis) {
       container = const ManageQuarRec();
     } else if (currentPage == DrawerSections.checkincheck) {
-      container = const ManageQuarRec();
+      container = const AMovementRec();
     } else if (currentPage == DrawerSections.userquarrec) {
       container = const ManageQuarRec();
     }

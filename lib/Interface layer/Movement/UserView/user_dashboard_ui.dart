@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cems/BLoC%20layer/Movement/UserBloc/user_dashboard_bloc.dart';
 
 class UMovDashboard extends StatefulWidget {
   const UMovDashboard({Key? key}) : super(key: key);
@@ -8,6 +9,8 @@ class UMovDashboard extends StatefulWidget {
 }
 
 class _UMovDashboardState extends State<UMovDashboard> {
+  ViewUserDashBloc viewUBloc = ViewUserDashBloc();
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
