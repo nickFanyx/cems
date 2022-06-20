@@ -34,16 +34,6 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('CEMS'),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.person),
-            tooltip: 'Show Snackbar',
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('This is a snackbar')));
-            },
-          ),
-        ],
       ),
       body: Center(
         child: _list.elementAt(_selectedIndex),
